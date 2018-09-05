@@ -1,13 +1,13 @@
 <template>
   <main class='boards'>
-    WELCOME TO THE BOARDS!!!
+    <mdc-headline align="center">WELCOME TO THE BOARDS!!!</mdc-headline>
     <mdc-fab fixed icon='add' @click='open = true'></mdc-fab>
     <mdc-dialog v-model='open' title='New Board' accept=''>
-    <form @submit.prevent='addBoard'>
-      <input type='text' placeholder='title' v-model='newBoard.title' required>
-      <input type='text' placeholder='description' v-model='newBoard.description'>
-      <button type='submit'>Create Board</button>
-    </form>
+      <form @submit.prevent='addBoard' class="form">
+        <mdc-textfield label='Title' v-model='newBoard.title' required />
+        <mdc-textfield label='Description' v-model='newBoard.description' multiline rows="5" cols="70" class="description" />
+        <mdc-button type='submit' @click='open = false' outlined >Create Board</mdc-button>
+      </form>
     </mdc-dialog>
     <mdc-list bordered class='list'>
       <mdc-list-item class='list-item' v-for='(board, index) in boards' :key='board._id'>
@@ -20,7 +20,7 @@
           <mdc-menu v-model='board.open'>
             <mdc-menu-item @click='deleteBoard(board._id)'>Remove</mdc-menu-item>
             <mdc-menu-item>Rename</mdc-menu-item>
-            <mdc-menu-item to='{name: "board", params: {boardId: board._id}}'>Open</mdc-menu-item>
+            <mdc-menu-item :to='{name: "board", params: {boardId: board._id}}'>Open</mdc-menu-item>
           </mdc-menu>
         </mdc-menu-anchor>
       </mdc-list-item>
@@ -30,21 +30,21 @@
 
 <script>
 export default {
-  name: 'boards',
+  name: "boards",
   created() {
     //blocks users not logged in
     if (!this.$store.state.user._id) {
-      this.$router.push({ name: 'login' })
+      this.$router.push({ name: "login" });
     }
   },
   mounted() {
-    this.$store.dispatch('getBoards')
+    this.$store.dispatch("getBoards");
   },
   data() {
     return {
       newBoard: {
-        title: '',
-        description: ''
+        title: "",
+        description: ""
       },
       open: false
     };
@@ -56,17 +56,23 @@ export default {
   },
   methods: {
     addBoard() {
-      this.$store.dispatch('addBoard', this.newBoard)
-      this.newBoard = { title: '', description: '' }
+      this.$store.dispatch("addBoard", this.newBoard);
+      this.newBoard = { title: "", description: "" };
     },
     deleteBoard(boardId) {
-      this.$store.dispatch('deleteBoard', boardId)
+      this.$store.dispatch("deleteBoard", boardId);
     }
   }
-}
+};
 </script>
 
 <style lang='scss' scoped>
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 35rem;
+  margin: auto;
+}
 .list {
   width: 35rem;
   margin: auto;
@@ -91,5 +97,9 @@ export default {
 <style lang='scss'>
 ul.mdc-simple-menu__items.mdc-list {
   padding: 0;
+}
+
+textarea {
+  resize: none;
 }
 </style>
