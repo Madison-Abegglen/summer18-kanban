@@ -1,11 +1,14 @@
 <template>
   <main class="boards">
     WELCOME TO THE BOARDS!!!
+    <mdc-fab fixed icon="add" @click="open=true"></mdc-fab>
+    <mdc-dialog v-model="open" title="Title" accept="Accept" cancel="Decline" @accept="onAccept" @cancel="onDecline">
     <form @submit.prevent="addBoard">
       <input type="text" placeholder="title" v-model="newBoard.title" required>
       <input type="text" placeholder="description" v-model="newBoard.description">
       <button type="submit">Create Board</button>
     </form>
+    </mdc-dialog>
     <mdc-list bordered class='list'>
       <mdc-list-item class='list-item' v-for="board in boards" :key="board._id">
         <router-link :to="{name: 'board', params: {boardId: board._id}}">{{board.title}}</router-link>
@@ -25,21 +28,21 @@
 
 <script>
 export default {
-  name: 'boards',
+  name: "boards",
   created() {
     //blocks users not logged in
     if (!this.$store.state.user._id) {
-      this.$router.push({ name: 'login' });
+      this.$router.push({ name: "login" });
     }
   },
   mounted() {
-    this.$store.dispatch('getBoards');
+    this.$store.dispatch("getBoards");
   },
   data() {
     return {
       newBoard: {
-        title: '',
-        description: ''
+        title: "",
+        description: ""
       },
       open: false
     };
@@ -51,11 +54,11 @@ export default {
   },
   methods: {
     addBoard() {
-      this.$store.dispatch('addBoard', this.newBoard);
-      this.newBoard = { title: '', description: '' };
+      this.$store.dispatch("addBoard", this.newBoard);
+      this.newBoard = { title: "", description: "" };
     },
     deleteBoard(boardId) {
-      this.$store.dispatch('deleteBoard', boardId);
+      this.$store.dispatch("deleteBoard", boardId);
     }
   }
 };
