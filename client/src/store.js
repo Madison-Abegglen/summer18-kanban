@@ -80,7 +80,10 @@ export default new Vuex.Store({
     getBoards ({ commit, dispatch }) {
       api.get('boards')
         .then(res => {
-          commit('setBoards', res.data)
+          commit('setBoards', res.data.map(board => {
+            board.open = false
+            return board
+          }))
         })
         .catch(error => dispatch('showSnack', error))
     },
