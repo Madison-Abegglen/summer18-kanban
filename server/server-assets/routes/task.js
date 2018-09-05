@@ -25,6 +25,8 @@ router.delete('/:id', (req, res, next) =>
     .catch(next)
 )
 
+
+// COMMENTSSSSSSSSSSSSSSS 
 router.get('/comments/:taskId', (req, res, next) =>
   Collection.find({ taskId: req.params.taskId })
     .then(item => res.send(item.comments))
@@ -32,9 +34,9 @@ router.get('/comments/:taskId', (req, res, next) =>
 )
 
 router.post('/comments/:taskId', (req, res, next) =>
-  Collection.findById(req.params.id)
+  Collection.findById(req.params.taskId)
     .then(item => {
-      item.comments.push(req.body)
+      item.comments = item.comments.concat(req.body)
       const comment = item.comments[item.comments.length - 1]
       item.save(err => {
         if (err) {
@@ -42,6 +44,10 @@ router.post('/comments/:taskId', (req, res, next) =>
         }
         res.send(comment)
       })
+    })
+    .catch(err => {
+      console.log(err)
+      next()
     })
 )
 
