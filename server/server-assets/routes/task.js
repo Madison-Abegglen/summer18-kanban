@@ -54,7 +54,13 @@ router.post('/comments/:taskId', (req, res, next) =>
 router.delete('/comments/:taskId/:commentId', (req, res, next) =>
   Collection.findById(req.params.taskId)
     .then(task => {
-      task.comments.find(comment => comment._id === commentId)
+      task.comments = task.comments.filter(comment => comment._id !== commentId)
+      task.save(err => {
+        if (err) {
+          return next(err)
+        }
+        res.send({ message: 'Successfully Delorted Comment!' })
+      })
     })
 )
 
