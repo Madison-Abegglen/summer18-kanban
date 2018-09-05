@@ -3,7 +3,7 @@ const Collection = require('../models/list')
 
 router.get('/:boardId', (req, res, next) =>
   Collection.find({ boardId: req.params.boardId })
-    .then(item => res.send(item))
+    .then(items => res.send(items))
     .catch(next)
 )
 
