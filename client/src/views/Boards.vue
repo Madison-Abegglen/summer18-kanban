@@ -1,36 +1,47 @@
 <template>
-  <div class="boards">
+  <main class="boards">
     WELCOME TO THE BOARDS!!!
     <form @submit.prevent="addBoard">
       <input type="text" placeholder="title" v-model="newBoard.title" required>
       <input type="text" placeholder="description" v-model="newBoard.description">
       <button type="submit">Create Board</button>
     </form>
-    <div v-for="board in boards" :key="board._id">
-      <router-link :to="{name: 'board', params: {boardId: board._id}}">{{board.title}}</router-link>
-      <button @click="deleteBoard(board._id)">DELETE BOARD</button>
-    </div>
-  </div>
+    <mdc-list bordered class='list'>
+      <mdc-list-item class='list-item' v-for="board in boards" :key="board._id">
+        <router-link :to="{name: 'board', params: {boardId: board._id}}">{{board.title}}</router-link>
+        <!-- <mdc-button @click="deleteBoard(board._id)">DELETE BOARD</mdc-button> -->
+        <mdc-menu-anchor>
+          <mdc-button @click='open=true' class='settings'>
+            <i style='margin: 0;' class="material-icons mdc-button__icon">more_horiz</i>
+          </mdc-button>
+          <mdc-menu v-model='open'>
+            <mdc-menu-item>Remove</mdc-menu-item>
+          </mdc-menu>
+        </mdc-menu-anchor>
+      </mdc-list-item>
+    </mdc-list>
+  </main>
 </template>
 
 <script>
 export default {
-  name: "boards",
+  name: 'boards',
   created() {
     //blocks users not logged in
     if (!this.$store.state.user._id) {
-      this.$router.push({ name: "login" });
+      this.$router.push({ name: 'login' });
     }
   },
   mounted() {
-    this.$store.dispatch("getBoards");
+    this.$store.dispatch('getBoards');
   },
   data() {
     return {
       newBoard: {
-        title: "",
-        description: ""
-      }
+        title: '',
+        description: ''
+      },
+      open: false
     };
   },
   computed: {
@@ -40,12 +51,36 @@ export default {
   },
   methods: {
     addBoard() {
-      this.$store.dispatch("addBoard", this.newBoard);
-      this.newBoard = { title: "", description: "" };
+      this.$store.dispatch('addBoard', this.newBoard);
+      this.newBoard = { title: '', description: '' };
     },
     deleteBoard(boardId) {
-      this.$store.dispatch("deleteBoard", boardId);
+      this.$store.dispatch('deleteBoard', boardId);
     }
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.list {
+  width: 35rem;
+  margin: auto;
+  .list-item {
+    display: flex;
+    justify-content: space-between;
+    overflow: visible;
+    .settings {
+      border-radius: 50%;
+      min-width: unset;
+      padding: 0;
+      width: 2rem;
+      height: 2rem;
+    }
+  }
+}
+</style>
+<style lang="scss">
+ul.mdc-simple-menu__items.mdc-list {
+  padding: 0;
+}
+</style>
