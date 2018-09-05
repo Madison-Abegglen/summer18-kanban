@@ -13,6 +13,7 @@ export default {
       this.$router.push({ name: "login" });
     }
   },
-  props: ["boardId"]
+  props: ["boardId"],
+  mounted() {}
 };
 </script>

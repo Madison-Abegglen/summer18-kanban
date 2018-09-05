@@ -28,18 +28,18 @@ export default new Vuex.Store({
     loggedIn: state => !!state.user._id
   },
   mutations: {
-    setUser (state, user) {
+    setUser(state, user) {
       state.user = user
     },
-    setBoards (state, boards) {
+    setBoards(state, boards) {
       state.boards = boards
     },
-    setSnack (state, snack) {
+    setSnack(state, snack) {
       state.snack = snack
     }
   },
   actions: {
-    showSnack ({ commit }, snack) {
+    showSnack({ commit }, snack) {
       if (snack instanceof Error) {
         if (snack.response && snack.response.data && snack.response.data.error) {
           snack = { message: snack.response.data.error, actionText: 'OK' }
@@ -51,7 +51,7 @@ export default new Vuex.Store({
     },
 
     // AUTH STUFF
-    register ({ commit, dispatch }, newUser) {
+    register({ commit, dispatch }, newUser) {
       auth.post('register', newUser)
         .then(res => {
           commit('setUser', res.data)
@@ -59,15 +59,15 @@ export default new Vuex.Store({
         })
         .catch(error => dispatch('showSnack', error))
     },
-    authenticate ({ commit, dispatch }) {
+    authenticate({ commit, dispatch }) {
       auth.get('authenticate')
         .then(res => {
           commit('setUser', res.data)
           router.push({ name: 'boards' })
         })
-        .catch(() => {}) // Swallow your errors
+        .catch(() => { }) // Swallow your errors
     },
-    login ({ commit, dispatch }, creds) {
+    login({ commit, dispatch }, creds) {
       auth.post('login', creds)
         .then(res => {
           commit('setUser', res.data)
@@ -77,7 +77,7 @@ export default new Vuex.Store({
     },
 
     // BOARDS
-    getBoards ({ commit, dispatch }) {
+    getBoards({ commit, dispatch }) {
       api.get('boards')
         .then(res => {
           commit('setBoards', res.data.map(board => {
@@ -87,14 +87,14 @@ export default new Vuex.Store({
         })
         .catch(error => dispatch('showSnack', error))
     },
-    addBoard ({ commit, dispatch }, boardData) {
+    addBoard({ commit, dispatch }, boardData) {
       api.post('boards', boardData)
         .then(serverBoard => {
           dispatch('getBoards')
         })
         .catch(error => dispatch('showSnack', error))
     },
-    deleteBoard ({ commit, dispatch }, boardId) {
+    deleteBoard({ commit, dispatch }, boardId) {
       api.delete('boards/' + boardId)
         .then(res => {
           dispatch('getBoards')
@@ -102,5 +102,6 @@ export default new Vuex.Store({
         .catch(error => dispatch('showSnack', error))
     }
 
+    // SINGULAR BOARD 
   }
 })

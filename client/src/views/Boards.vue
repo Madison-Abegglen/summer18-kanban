@@ -10,9 +10,8 @@
       </form>
     </mdc-dialog>
     <mdc-list bordered class='list'>
-      <mdc-list-item class='list-item' v-for='(board, index) in boards' :key='board._id'>
+      <mdc-list-item class='list-item' v-for='board in boards' :key='board._id'>
         <router-link :to='{name: "board", params: {boardId: board._id}}'>{{board.title}}</router-link>
-        <!-- <mdc-button @click='deleteBoard(board._id)'>DELETE BOARD</mdc-button> -->
         <mdc-menu-anchor>
           <mdc-button @click='board.open = true' class='settings'>
             <i class='material-icons mdc-button__icon'>more_horiz</i>
