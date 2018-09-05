@@ -1,7 +1,9 @@
 <template>
   <div class="board">
-    <mdc-headline class='title'>Welcome to your board: {{activeBoard.title}}</mdc-headline>
-    <mdc-body>{{ activeBoard.created | moment('MM/DD/YY') }}</mdc-body>
+    <header>
+      <mdc-headline class='m-0'>Welcome to your board: {{activeBoard.title}}</mdc-headline>
+      <mdc-body class='m-0'>Created At: {{ activeBoard.created | moment('h:mm a — MM/DD/YY') }}</mdc-body>
+    </header>
   </div>
 </template>
 
@@ -28,7 +30,11 @@ export default {
 };
 </script>
 <style lang="scss">
-.title {
-  margin-bottom: 0;
+.m-0 {
+  margin: 0;
+}
+header {
+  padding-top: 1rem;
+  padding-left: 2rem;
 }
 </style>

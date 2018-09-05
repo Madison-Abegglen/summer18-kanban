@@ -22,7 +22,8 @@ export default new Vuex.Store({
     user: {},
     boards: [],
     activeBoard: {},
-    snack: {}
+    snack: {},
+    activeLists: []
   },
   getters: {
     loggedIn: state => !!state.user._id
@@ -39,6 +40,9 @@ export default new Vuex.Store({
     },
     setActiveBoard(state, activeBoard) {
       state.activeBoard = activeBoard
+    },
+    setActiveLists(state, activeLists) {
+      state.activeLists = activeLists
     }
   },
   actions: {
@@ -105,10 +109,25 @@ export default new Vuex.Store({
         .catch(error => dispatch('showSnack', error))
     },
 
-    // singular board 
-    setBoard({ commit, state }, boardId) {
+    // SINGULAR BOARD
+    setBoard({ commit, dispatch, state }, boardId) {
       const activeBoard = state.boards.find(board => board._id == boardId)
       commit('setActiveBoard', activeBoard)
+      dispatch('setLists', boardId)
+    },
+
+    // LISTS
+    setLists({ commit, dispatch, state }, boardId) {
+      api.get('lists/' + boardId)
+        .then(res => {
+          commit('setActiveLists', res.data)
+          res.data.forEach(list => {
+            dispatch()
+          });
+        })
     }
+
+    // TASKZZZZ
+
   }
 })
