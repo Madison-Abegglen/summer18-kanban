@@ -1,47 +1,40 @@
 <template>
-  <div class="login">
-    <form v-if="loginForm" @submit.prevent="loginUser">
-      <input type="email" v-model="creds.email" placeholder="email">
-      <input type="password" v-model="creds.password" placeholder="password">
-      <button type="submit">Login</button>
+  <main class='login'>
+    <form>
+      <mdc-textfield v-model='name' label='Name' required />
     </form>
-    <form v-else @submit.prevent="register">
-      <input type="text" v-model="newUser.name" placeholder="name">
-      <input type="email" v-model="newUser.email" placeholder="email">
-      <input type="password" v-model="newUser.password" placeholder="password">
-      <button type="submit">Create Account</button>
-    </form>
-    <div @click="loginForm = !loginForm">
-      <p v-if="loginForm">No account? Click here to Register</p>
-      <p v-else>Already have an account? Click here to Login</p>
-    </div>
-  </div>
+  </main>
 </template>
 
 <script>
 export default {
-  name: "login",
+  name: 'login',
   data() {
     return {
       loginForm: true,
-      creds: {
-        email: "",
-        password: ""
-      },
-      newUser: {
-        email: "",
-        password: "",
-        name: ""
-      }
-    };
+      name: '',
+      email: '',
+      password: ''
+    }
   },
   methods: {
     register() {
-      this.$store.dispatch("register", this.newUser);
+      this.$store.dispatch('register', {
+        name: this.name,
+        email: this.email,
+        password: this.password
+      })
     },
-    loginUser() {
-      this.$store.dispatch("login", this.creds);
+    login() {
+      this.$store.dispatch('login', {
+        email: this.email,
+        password: this.password
+      })
     }
   }
 };
 </script>
+
+<style lang="scss" scoped>
+
+</style>
