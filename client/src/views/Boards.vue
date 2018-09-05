@@ -18,9 +18,9 @@
             <i class='material-icons mdc-button__icon'>more_horiz</i>
           </mdc-button>
           <mdc-menu v-model='board.open'>
-            <mdc-menu-item @click='deleteBoard(board._id)'>Remove</mdc-menu-item>
-            <mdc-menu-item>Rename</mdc-menu-item>
-            <mdc-menu-item :to='{name: "board", params: {boardId: board._id}}'>Open</mdc-menu-item>
+            <mdc-button @click='deleteBoard(board._id)'>Remove</mdc-button>
+            <mdc-button>Rename</mdc-button>
+            <mdc-button :to='{name: "board", params: {boardId: board._id}}'>Open</mdc-button>
           </mdc-menu>
         </mdc-menu-anchor>
       </mdc-list-item>
@@ -71,6 +71,7 @@ export default {
   display: flex;
   flex-direction: column;
   width: 35rem;
+  max-width: 100%;
   margin: auto;
 }
 .list {
