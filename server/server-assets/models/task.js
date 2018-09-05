@@ -21,7 +21,7 @@ const schema = new Schema({
   created: {
     type: Number,
     required: true,
-    default: Date.now()
+    default: Date.now
   },
   listId: {
     type: Schema.Types.ObjectId,

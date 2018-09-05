@@ -9,7 +9,7 @@ const schema = new Schema({
   created: {
     type: Number,
     required: true,
-    default: Date.now()
+    default: Date.now
   },
   boardId: {
     type: Schema.Types.ObjectId,
