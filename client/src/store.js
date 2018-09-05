@@ -41,7 +41,11 @@ export default new Vuex.Store({
   actions: {
     showSnack ({ commit }, snack) {
       if (snack instanceof Error) {
-        snack = { message: snack.response.data.error, actionText: 'OK' }
+        if (snack.response && snack.response.data && snack.response.data.error) {
+          snack = { message: snack.response.data.error, actionText: 'OK' }
+        } else {
+          snack = { message: snack.message, actionText: 'OK' }
+        }
       }
       commit('setSnack', snack)
     },
