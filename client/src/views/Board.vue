@@ -4,6 +4,17 @@
       <mdc-headline class='m-0'>Welcome to your board: {{activeBoard.title}}</mdc-headline>
       <mdc-body class='m-0'>Created At: {{ activeBoard.created | moment('h:mm a — MM/DD/YY') }}</mdc-body>
     </header>
+    <section>
+      <mdc-card v-if="newListOpen">
+      <form @submit.prevent="addNewList">
+        <mdc-textfield v-model="newListTitle" label="Title goes here" />
+        <mdc-button outlined type="submit">Create List</mdc-button>
+      </form>
+      </mdc-card>
+      <list v-for="list in activeLists" :key="list._id" :listData="List" />
+    </section>
+    <mdc-fab fixed icon="add" @click="newListOpen = true">
+    </mdc-fab>
   </div>
 </template>
 
@@ -14,6 +25,9 @@ export default {
   computed: {
     activeBoard() {
       return this.$store.state.activeBoard;
+    },
+    activeLists() {
+      return this.$store.state.activeLists;
     }
   },
   created() {
@@ -26,7 +40,20 @@ export default {
     this.$store.dispatch("setBoard", this.$props.boardId);
   },
   props: ["boardId"],
-  components: { List }
+  components: { List },
+  data() {
+    return {
+      newListOpen: false,
+      newListTitle: ""
+    };
+  },
+  methods: {
+    addNewList() {
+      this.newListOpen = false;
+      this.$store.dispatch("createList", this.newListTitle);
+      this.newListTitle = "";
+    }
+  }
 };
 </script>
 <style lang="scss">

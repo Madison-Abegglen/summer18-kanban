@@ -23,7 +23,8 @@ export default new Vuex.Store({
     boards: [],
     activeBoard: {},
     snack: {},
-    activeLists: []
+    activeLists: [],
+    activeTasks: {}
   },
   getters: {
     loggedIn: state => !!state.user._id
@@ -43,6 +44,9 @@ export default new Vuex.Store({
     },
     setActiveLists(state, activeLists) {
       state.activeLists = activeLists
+    },
+    setActiveTasks(state, { listId, tasks }) {
+      Vue.set(state.activeTasks, listId, tasks)
     }
   },
   actions: {
@@ -122,12 +126,23 @@ export default new Vuex.Store({
         .then(res => {
           commit('setActiveLists', res.data)
           res.data.forEach(list => {
-            dispatch()
+            dispatch('setTasks', list._id)
           });
         })
-    }
+    },
+    createList({ dispatch, state }, title) {
+      api.post('lists/', { title, boardId: state.activeBoard._id })
+        .then(res => {
+          dispatch('setLists', state.activeBoard._id)
+        })
+    },
 
     // TASKZZZZ
-
+    setTasks({ commit }, listId) {
+      api.get('tasks/' + listId)
+        .then(res => {
+          commit('setActiveTasks', { listId, tasks: res.data })
+        })
+    }
   }
 })
