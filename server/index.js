@@ -38,8 +38,12 @@ server.use((req, res, next) => {
 })
 
 // YOUR ROUTES HERE!!!!!!
-let boardRoutes = require('./server-assets/routes/board')
+const boardRoutes = require('./server-assets/routes/board')
+const listRoutes = require('./server-assets/routes/list')
+const taskRoutes = require('./server-assets/routes/task')
 server.use('/api/boards', boardRoutes)
+server.use('/api/lists', listRoutes)
+server.use('/api/tasks', taskRoutes)
 
 server.use('/api/*', (error, req, res, next) => {
   res.status(400).send(error)

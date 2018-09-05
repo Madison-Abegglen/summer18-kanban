@@ -25,4 +25,31 @@ router.delete('/:id', (req, res, next) =>
     .catch(next)
 )
 
+router.get('/comments/:taskId', (req, res, next) =>
+  Collection.find({ taskId: req.params.taskId })
+    .then(item => res.send(item.comments))
+    .catch(next)
+)
+
+router.post('/comments/:taskId', (req, res, next) =>
+  Collection.findById(req.params.id)
+    .then(item => {
+      item.comments.push(req.body)
+      const comment = item.comments[item.comments.length - 1]
+      item.save(err => {
+        if (err) {
+          return next(err)
+        }
+        res.send(comment)
+      })
+    })
+)
+
+router.delete('/comments/:taskId/:commentId', (req, res, next) =>
+  Collection.findById(req.params.taskId)
+    .then(task => {
+      task.comments.find(comment => comment._id === commentId)
+    })
+)
+
 module.exports = router
