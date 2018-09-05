@@ -1,10 +1,12 @@
 <template>
   <div class="board">
     <mdc-headline>Welcome to ...{{activeBoard.title}}!</mdc-headline>
+
   </div>
 </template>
 
 <script>
+import List from "@/components/List";
 export default {
   name: "board",
   computed: {
@@ -21,6 +23,7 @@ export default {
     // dispatch boardId to setBoard for activeBoard
     this.$store.dispatch("setBoard", this.$props.boardId);
   },
-  props: ["boardId"]
+  props: ["boardId"],
+  components: { List }
 };
 </script>

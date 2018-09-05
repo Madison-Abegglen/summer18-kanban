@@ -4,7 +4,8 @@
 
 <script>
 export default {
-  name: "List"
+  name: "List",
+  props: ["listData"]
 };
 </script>
 
