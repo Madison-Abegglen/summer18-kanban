@@ -36,6 +36,9 @@ export default new Vuex.Store({
     },
     setSnack(state, snack) {
       state.snack = snack
+    },
+    setActiveBoard(state, activeBoard) {
+      state.activeBoard = activeBoard
     }
   },
   actions: {
@@ -100,8 +103,12 @@ export default new Vuex.Store({
           dispatch('getBoards')
         })
         .catch(error => dispatch('showSnack', error))
-    }
+    },
 
-    // SINGULAR BOARD 
+    // singular board 
+    setBoard({ commit, state }, boardId) {
+      const activeBoard = state.boards.find(board => board._id == boardId)
+      commit('setActiveBoard', activeBoard)
+    }
   }
 })
