@@ -9,8 +9,8 @@
   "dependencies": {
     "axios": "^0.18.0",
     "vue": "^2.5.17",
+    "vue-mdc-adapter": "^0.18.2",
     "vue-router": "^3.0.1",
-    "vuetify": "^1.2.2",
     "vuex": "^3.0.1"
   },
   "devDependencies": {
