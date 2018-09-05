@@ -1,18 +1,16 @@
-let mongoose = require('mongoose')
-let Schema = mongoose.Schema
-let ObjectId = Schema.Types.ObjectId
+const mongoose = require('mongoose')
+const { Schema } = mongoose
 
-//bcrypt uses hashing and salt to obfiscate your password 
-let bcrypt = require('bcryptjs')
+// bcrypt uses hashing and salt to obfiscate your password
+const bcrypt = require('bcryptjs')
 const SALT = 10
 
-
-let schema = new Schema({
+const schema = new Schema({
   name: {
     type: String,
     required: true
   },
-  //every email must be unique on the database
+  // every email must be unique on the database
   email: {
     type: String,
     required: true,
@@ -29,15 +27,13 @@ let schema = new Schema({
   }
 })
 
-
-//THESE TWO METHODS CAN BE COPIED FOR ALL USER SCHEMA'S
-
-//statics are used to create Model methods
+// THESE TWO METHODS CAN BE COPIED FOR ALL USER SCHEMA'S
+// statics are used to create Model methods
 schema.statics.generateHash = function (password) {
   return bcrypt.hashSync(password, SALT)
 }
 
-//schema.methods are used to add a method to a Model instance
+// schema.methods are used to add a method to a Model instance
 schema.methods.validatePassword = function (password) {
   return bcrypt.compare(password, this.password)
 }

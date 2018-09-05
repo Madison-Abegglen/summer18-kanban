@@ -1,64 +1,66 @@
-let router = require('express').Router()
-let Boards = require('../models/board')
+const router = require('express').Router()
+const Boards = require('../models/board')
 
-//GET
+// GET
 router.get('/', (req, res, next) => {
   Boards.find({ authorId: req.session.uid })
     .then(data => {
       res.send(data)
     })
-    .catch(err => {
-      console.log(err)
-      next()
+    .catch(error => {
+      console.log('[BOARD ERROR]', error)
+      next(error)
     })
 })
 
-//POST
+// POST
 router.post('/', (req, res, next) => {
   req.body.authorId = req.session.uid
   Boards.create(req.body)
     .then(newBoard => {
       res.send(newBoard)
     })
-    .catch(err => {
-      console.log(err)
-      next()
+    .catch(error => {
+      console.log('[BOARD ERROR]', error)
+      next(error)
     })
 })
 
-//PUT
+// PUT
 router.put('/:id', (req, res, next) => {
   Boards.findById(req.params.id)
     .then(board => {
       if (!board.authorId.equals(req.session.uid)) {
-        return res.status(401).send("ACCESS DENIED!")
+        return res.status(401).send({ error: 'ACCESS DENIED!' })
       }
-      board.update(req.body, (err) => {
-        if (err) {
-          console.log(err)
-          next()
-          return
+      board.update(req.body, (error) => {
+        if (error) {
+          console.log('[BOARD ERROR]', error)
+          return next(error)
         }
-        res.send("Successfully Updated")
+        res.send({ message: 'Successfully Updated' })
       });
     })
-    .catch(err => {
-      console.log(err)
-      next()
+    .catch(error => {
+      console.log('[BOARD ERROR]', error)
+      next(error)
     })
 })
 
-//DELETE
+// DELETE
 router.delete('/:id', (req, res, next) => {
   Boards.findById(req.params.id)
     .then(board => {
       if (!board.authorId.equals(req.session.uid)) {
-        return res.status(401).send("ACCESS DENIED!")
+        return res.status(401).send({ error: 'ACCESS DENIED!' })
       }
-      Boards.findByIdAndRemove(req.params.id)
-        .then(data => {
-          res.send('DELORTED')
-        })
+      board.remove(req.body, (error) => {
+        if (error) {
+          console.log('[BOARD ERROR]', error)
+          return next(error)
+        }
+        res.send({ message: 'Successfully DELORTED' })
+      });
     })
 })
 

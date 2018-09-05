@@ -1,17 +1,13 @@
-let mongoose = require('mongoose')
-let Schema = mongoose.Schema
-let ObjectId = Schema.Types.ObjectId
-let schemaName = 'Board'
+const mongoose = require('mongoose')
+const { Schema } = mongoose
 
-
-let schema = new Schema({
+const schema = new Schema({
   title: {
     type: String,
     required: true
   },
   description: {
-    type: String,
-    required: true
+    type: String
   },
   created: {
     type: Number,
@@ -19,10 +15,10 @@ let schema = new Schema({
     default: Date.now()
   },
   authorId: {
-    type: ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'User',
     required: true
   }
 })
 
-module.exports = mongoose.model(schemaName, schema)
+module.exports = mongoose.model('Board', schema)
