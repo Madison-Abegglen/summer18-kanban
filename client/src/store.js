@@ -17,6 +17,8 @@ let api = Axios.create({
   withCredentials: true
 })
 
+const notify = error => console.warn(error) // TODO: Replace with real notifications
+
 export default new Vuex.Store({
   state: {
     user: {},
@@ -39,6 +41,7 @@ export default new Vuex.Store({
           commit('setUser', res.data)
           router.push({ name: 'boards' })
         })
+        .catch(notify)
     },
     authenticate({ commit, dispatch }) {
       auth.get('authenticate')
@@ -46,6 +49,7 @@ export default new Vuex.Store({
           commit('setUser', res.data)
           router.push({ name: 'boards' })
         })
+        .catch(notify)
     },
     login({ commit, dispatch }, creds) {
       auth.post('login', creds)
@@ -53,6 +57,7 @@ export default new Vuex.Store({
           commit('setUser', res.data)
           router.push({ name: 'boards' })
         })
+        .catch(notify)
     },
 
     //BOARDS
@@ -61,18 +66,21 @@ export default new Vuex.Store({
         .then(res => {
           commit('setBoards', res.data)
         })
+        .catch(notify)
     },
     addBoard({ commit, dispatch }, boardData) {
       api.post('boards', boardData)
         .then(serverBoard => {
           dispatch('getBoards')
         })
+        .catch(notify)
     },
     deleteBoard({ commit, dispatch }, boardId) {
       api.delete('boards/' + boardId)
         .then(res => {
           dispatch('getBoards')
         })
+        .catch(notify)
     }
 
   }
