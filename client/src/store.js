@@ -6,13 +6,13 @@ import router from './router'
 Vue.use(Vuex)
 
 let auth = Axios.create({
-  baseURL: "//localhost:3000/auth/",
+  baseURL: '//localhost:3000/auth/',
   timeout: 3000,
   withCredentials: true
 })
 
 let api = Axios.create({
-  baseURL: "//localhost:3000/api/",
+  baseURL: '//localhost:3000/api/',
   timeout: 3000,
   withCredentials: true
 })
@@ -26,16 +26,16 @@ export default new Vuex.Store({
     activeBoard: {}
   },
   mutations: {
-    setUser(state, user) {
+    setUser (state, user) {
       state.user = user
     },
-    setBoards(state, boards) {
+    setBoards (state, boards) {
       state.boards = boards
     }
   },
   actions: {
-    //AUTH STUFF
-    register({ commit, dispatch }, newUser) {
+    // AUTH STUFF
+    register ({ commit, dispatch }, newUser) {
       auth.post('register', newUser)
         .then(res => {
           commit('setUser', res.data)
@@ -43,7 +43,7 @@ export default new Vuex.Store({
         })
         .catch(notify)
     },
-    authenticate({ commit, dispatch }) {
+    authenticate ({ commit, dispatch }) {
       auth.get('authenticate')
         .then(res => {
           commit('setUser', res.data)
@@ -51,7 +51,7 @@ export default new Vuex.Store({
         })
         .catch(notify)
     },
-    login({ commit, dispatch }, creds) {
+    login ({ commit, dispatch }, creds) {
       auth.post('login', creds)
         .then(res => {
           commit('setUser', res.data)
@@ -60,22 +60,22 @@ export default new Vuex.Store({
         .catch(notify)
     },
 
-    //BOARDS
-    getBoards({ commit, dispatch }) {
+    // BOARDS
+    getBoards ({ commit, dispatch }) {
       api.get('boards')
         .then(res => {
           commit('setBoards', res.data)
         })
         .catch(notify)
     },
-    addBoard({ commit, dispatch }, boardData) {
+    addBoard ({ commit, dispatch }, boardData) {
       api.post('boards', boardData)
         .then(serverBoard => {
           dispatch('getBoards')
         })
         .catch(notify)
     },
-    deleteBoard({ commit, dispatch }, boardId) {
+    deleteBoard ({ commit, dispatch }, boardId) {
       api.delete('boards/' + boardId)
         .then(res => {
           dispatch('getBoards')

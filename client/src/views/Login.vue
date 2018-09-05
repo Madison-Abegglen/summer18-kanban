@@ -35,6 +35,11 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-
+<style lang='scss'>
+label.mdc-floating-label {
+  margin-bottom: 0;
+}
+input.mdc-text-field__input {
+  padding-top: 0;
+}
 </style>
