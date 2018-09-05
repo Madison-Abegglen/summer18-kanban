@@ -1,7 +1,7 @@
 <template>
   <div class="board">
-    <mdc-headline>Welcome to ...{{activeBoard.title}}!</mdc-headline>
-
+    <mdc-headline class='title'>Welcome to your board: {{activeBoard.title}}</mdc-headline>
+    <mdc-body>{{ activeBoard.created | moment('MM/DD/YY') }}</mdc-body>
   </div>
 </template>
 
@@ -27,3 +27,8 @@ export default {
   components: { List }
 };
 </script>
+<style lang="scss">
+.title {
+  margin-bottom: 0;
+}
+</style>

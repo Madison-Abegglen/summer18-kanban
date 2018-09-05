@@ -7,6 +7,8 @@ import VueMDCAdapter from 'vue-mdc-adapter'
 import 'vue-mdc-adapter/dist/vue-mdc-adapter.min.css'
 Vue.use(VueMDCAdapter)
 
+Vue.use(require('vue-moment'))
+
 Vue.config.productionTip = false
 
 new Vue({
