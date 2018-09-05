@@ -9,7 +9,7 @@
       <mdc-textfield type='password' v-model='password' label='Password' minlength='8' helptext-persistent helptext-validation helptext='Password must be at least 8 characters' leading-icon='lock' box required />
       <div class='buttons'>
         <mdc-button raised type='submit'>{{ isLogin ? 'Login' : 'Signup' }}</mdc-button>
-        <mdc-button type='button' class='underline-text' @click='isLogin = !isLogin'>Swicth to {{ isLogin ? 'Signup' : 'Login' }}</mdc-button>
+        <mdc-button type='button' class='underline-text' @click='isLogin = !isLogin'>Switch to {{ isLogin ? 'Signup' : 'Login' }}</mdc-button>
       </div>
     </form>
   </main>
