@@ -17,13 +17,15 @@ let api = Axios.create({
   withCredentials: true
 })
 
-const notify = error => console.warn(error) // TODO: Replace with real notifications
-
 export default new Vuex.Store({
   state: {
     user: {},
     boards: [],
-    activeBoard: {}
+    activeBoard: {},
+    snack: {}
+  },
+  getters: {
+    loggedIn: state => !!state.user._id
   },
   mutations: {
     setUser (state, user) {
@@ -31,9 +33,19 @@ export default new Vuex.Store({
     },
     setBoards (state, boards) {
       state.boards = boards
+    },
+    setSnack (state, snack) {
+      state.snack = snack
     }
   },
   actions: {
+    showSnack ({ commit }, snack) {
+      if (snack instanceof Error) {
+        snack = { message: snack.response.data.error, actionText: 'OK' }
+      }
+      commit('setSnack', snack)
+    },
+
     // AUTH STUFF
     register ({ commit, dispatch }, newUser) {
       auth.post('register', newUser)
@@ -41,7 +53,7 @@ export default new Vuex.Store({
           commit('setUser', res.data)
           router.push({ name: 'boards' })
         })
-        .catch(notify)
+        .catch(error => dispatch('showSnack', error))
     },
     authenticate ({ commit, dispatch }) {
       auth.get('authenticate')
@@ -49,7 +61,7 @@ export default new Vuex.Store({
           commit('setUser', res.data)
           router.push({ name: 'boards' })
         })
-        .catch(notify)
+        .catch(() => {}) // Swallow your errors
     },
     login ({ commit, dispatch }, creds) {
       auth.post('login', creds)
@@ -57,7 +69,7 @@ export default new Vuex.Store({
           commit('setUser', res.data)
           router.push({ name: 'boards' })
         })
-        .catch(notify)
+        .catch(error => dispatch('showSnack', error))
     },
 
     // BOARDS
@@ -66,21 +78,21 @@ export default new Vuex.Store({
         .then(res => {
           commit('setBoards', res.data)
         })
-        .catch(notify)
+        .catch(error => dispatch('showSnack', error))
     },
     addBoard ({ commit, dispatch }, boardData) {
       api.post('boards', boardData)
         .then(serverBoard => {
           dispatch('getBoards')
         })
-        .catch(notify)
+        .catch(error => dispatch('showSnack', error))
     },
     deleteBoard ({ commit, dispatch }, boardId) {
       api.delete('boards/' + boardId)
         .then(res => {
           dispatch('getBoards')
         })
-        .catch(notify)
+        .catch(error => dispatch('showSnack', error))
     }
 
   }
