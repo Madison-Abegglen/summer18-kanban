@@ -3,6 +3,11 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
+import VueMDCAdapter from 'vue-mdc-adapter'
+Vue.use(VueMDCAdapter)
+
+Vue.use(Vuetify)
+
 Vue.config.productionTip = false
 
 new Vue({
