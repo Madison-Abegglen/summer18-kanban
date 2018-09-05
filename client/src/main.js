@@ -4,6 +4,7 @@ import router from './router'
 import store from './store'
 
 import VueMDCAdapter from 'vue-mdc-adapter'
+import 'vue-mdc-adapter/dist/vue-mdc-adapter.min.css'
 Vue.use(VueMDCAdapter)
 
 Vue.config.productionTip = false
