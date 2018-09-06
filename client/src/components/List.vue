@@ -3,6 +3,7 @@
     <div class="list-header">
       <mdc-card-header :title="$props.listData.title">
       </mdc-card-header>
+      <mdc-body>{{ tasks.length }}</mdc-body>
       <mdc-button class="add-task-button" @click="newTaskOpen = true">
         <mdc-icon icon="add"></mdc-icon>
       </mdc-button>
