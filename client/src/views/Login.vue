@@ -69,6 +69,10 @@ export default {
     display: flex;
     flex-direction: column;
     width: 25rem;
+    svg {
+      height: 7rem;
+      transform: translateY(-3rem);
+    }
 
     .title {
       margin: 0 0 1rem;
