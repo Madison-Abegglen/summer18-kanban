@@ -10,8 +10,8 @@
       </form>
     </mdc-dialog>
     <mdc-list bordered class='list'>
-      <mdc-list-item class='list-item' v-for='board in boards' :key='board._id'>
-        <router-link :to='{name: "board", params: {boardId: board._id}}'>{{board.title}}</router-link>
+      <mdc-list-item class='list-item mdc-elevation mdc-elevation--z2' v-for='board in boards' :key='board._id'>
+        <mdc-button class='board-title' :to='{name: "board", params: {boardId: board._id}}'>{{board.title}}</mdc-button>
         <mdc-menu-anchor>
           <mdc-button @click='board.open = true' class='settings'>
             <i class='material-icons mdc-button__icon'>more_horiz</i>
@@ -31,7 +31,7 @@
 export default {
   name: "boards",
   created() {
-    //blocks users not logged in
+    // blocks users not logged in
     if (!this.$store.state.user._id) {
       this.$router.push({ name: "login" });
     }
@@ -80,6 +80,11 @@ export default {
     display: flex;
     justify-content: space-between;
     overflow: visible;
+    transition: box-shadow 0.2s;
+    will-change: box-shadow;
+    &:not(:hover) {
+      box-shadow: none;
+    }
     .settings {
       border-radius: 50%;
       min-width: unset;
@@ -92,6 +97,11 @@ export default {
       }
     }
   }
+}
+
+.board-title {
+  text-transform: initial;
+  text-decoration: underline;
 }
 </style>
 <style lang='scss'>
