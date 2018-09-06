@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import Axios from 'axios'
 import router from './router'
+import { runInNewContext } from 'vm';
 
 Vue.use(Vuex)
 
@@ -129,13 +130,23 @@ export default new Vuex.Store({
             dispatch('setTasks', list._id)
           });
         })
+        .catch(error => dispatch('showSnack', error))
     },
     createList({ dispatch, state }, title) {
       api.post('lists/', { title, boardId: state.activeBoard._id })
         .then(res => {
           dispatch('setLists', state.activeBoard._id)
         })
+        .catch(error => dispatch('showSnack', error))
     },
+    deleteList({ dispatch, state }, listId) {
+      api.delete('lists/' + listId)
+        .then(res => {
+          dispatch('setLists', state.activeBoard._id)
+        })
+        .catch(error => dispatch('showSnack', error))
+    },
+
 
     // TASKZZZZ
     setTasks({ commit }, listId) {
@@ -143,12 +154,14 @@ export default new Vuex.Store({
         .then(res => {
           commit('setActiveTasks', { listId, tasks: res.data })
         })
+        .catch(error => dispatch('showSnack', error))
     },
     createTask({ dispatch }, data) {
       api.post('tasks/', data)
         .then(res => {
           dispatch('setTasks', data.listId)
         })
-    }
+        .catch(error => dispatch('showSnack', error))
+    },
   }
 })

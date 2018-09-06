@@ -3,8 +3,11 @@
     <div class="list-header">
       <mdc-card-header :title="$props.listData.title">
       </mdc-card-header>
-      <mdc-button @click="newTaskOpen = true">
+      <mdc-button class="add-task-button" @click="newTaskOpen = true">
         <mdc-icon icon="add"></mdc-icon>
+      </mdc-button>
+      <mdc-button @click='deleteList()'>
+        <i class='material-icons mdc-button__icon'>delete_outline</i>
       </mdc-button>
     </div>
     <div class="list-tasks">
@@ -41,6 +44,10 @@ export default {
         listId: this.$props.listData._id,
         content: this.taskContent
       });
+      this.taskContent = "";
+    },
+    deleteList() {
+      this.$store.dispatch("deleteList", this.$props.listData._id);
     }
   }
 };
@@ -49,8 +56,10 @@ export default {
 <style lang="scss" scoped>
 .list-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  .add-task-button {
+    margin-left: auto;
+  }
 }
 </style>
 <style lang="scss">
