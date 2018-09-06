@@ -31,27 +31,27 @@ export default new Vuex.Store({
     loggedIn: state => !!state.user._id
   },
   mutations: {
-    setUser (state, user) {
+    setUser(state, user) {
       state.user = user
     },
-    setBoards (state, boards) {
+    setBoards(state, boards) {
       state.boards = boards
     },
-    setSnack (state, snack) {
+    setSnack(state, snack) {
       state.snack = snack
     },
-    setActiveBoard (state, activeBoard) {
+    setActiveBoard(state, activeBoard) {
       state.activeBoard = activeBoard
     },
-    setActiveLists (state, activeLists) {
+    setActiveLists(state, activeLists) {
       state.activeLists = activeLists
     },
-    setActiveTasks (state, { listId, tasks }) {
+    setActiveTasks(state, { listId, tasks }) {
       Vue.set(state.activeTasks, listId, tasks)
     }
   },
   actions: {
-    showSnack ({ commit }, snack) {
+    showSnack({ commit }, snack) {
       if (snack instanceof Error) {
         if (snack.response && snack.response.data && snack.response.data.error) {
           snack = { message: snack.response.data.error, actionText: 'OK' }
@@ -63,7 +63,7 @@ export default new Vuex.Store({
     },
 
     // AUTH STUFF
-    register ({ commit, dispatch }, newUser) {
+    register({ commit, dispatch }, newUser) {
       auth.post('register', newUser)
         .then(res => {
           commit('setUser', res.data)
@@ -71,7 +71,7 @@ export default new Vuex.Store({
         })
         .catch(error => dispatch('showSnack', error))
     },
-    authenticate ({ commit, dispatch }) {
+    authenticate({ commit, dispatch }) {
       auth.get('authenticate')
         .then(res => {
           commit('setUser', res.data)
@@ -79,7 +79,7 @@ export default new Vuex.Store({
         })
         .catch(() => { }) // Swallow your errors
     },
-    login ({ commit, dispatch }, creds) {
+    login({ commit, dispatch }, creds) {
       auth.post('login', creds)
         .then(res => {
           commit('setUser', res.data)
@@ -87,14 +87,14 @@ export default new Vuex.Store({
         })
         .catch(error => dispatch('showSnack', error))
     },
-    logout ({ commit, dispatch }) {
+    logout({ commit, dispatch }) {
       auth.delete('logout')
         .then(() => commit('setUser', {}))
         .catch(error => dispatch('showSnack', error))
     },
 
     // BOARDS
-    getBoards ({ commit, dispatch }) {
+    getBoards({ commit, dispatch }) {
       api.get('boards')
         .then(res => {
           commit('setBoards', res.data.map(board => {
@@ -104,14 +104,14 @@ export default new Vuex.Store({
         })
         .catch(error => dispatch('showSnack', error))
     },
-    addBoard ({ commit, dispatch }, boardData) {
+    addBoard({ commit, dispatch }, boardData) {
       api.post('boards', boardData)
         .then(serverBoard => {
           dispatch('getBoards')
         })
         .catch(error => dispatch('showSnack', error))
     },
-    deleteBoard ({ commit, dispatch }, boardId) {
+    deleteBoard({ commit, dispatch }, boardId) {
       api.delete('boards/' + boardId)
         .then(res => {
           dispatch('getBoards')
@@ -120,14 +120,14 @@ export default new Vuex.Store({
     },
 
     // SINGULAR BOARD
-    setBoard ({ commit, dispatch, state }, boardId) {
+    setBoard({ commit, dispatch, state }, boardId) {
       const activeBoard = state.boards.find(board => board._id == boardId)
       commit('setActiveBoard', activeBoard)
       dispatch('setLists', boardId)
     },
 
     // LISTS
-    setLists ({ commit, dispatch, state }, boardId) {
+    setLists({ commit, dispatch, state }, boardId) {
       api.get('lists/' + boardId)
         .then(res => {
           commit('setActiveLists', res.data)
@@ -137,14 +137,14 @@ export default new Vuex.Store({
         })
         .catch(error => dispatch('showSnack', error))
     },
-    createList ({ dispatch, state }, title) {
+    createList({ dispatch, state }, title) {
       api.post('lists/', { title, boardId: state.activeBoard._id })
         .then(res => {
           dispatch('setLists', state.activeBoard._id)
         })
         .catch(error => dispatch('showSnack', error))
     },
-    deleteList ({ dispatch, state }, listId) {
+    deleteList({ dispatch, state }, listId) {
       api.delete('lists/' + listId)
         .then(res => {
           dispatch('setLists', state.activeBoard._id)
@@ -153,15 +153,26 @@ export default new Vuex.Store({
     },
 
     // TASKZZZZ
-    setTasks ({ commit, dispatch }, listId) {
+    setTasks({ commit, dispatch }, listId) {
       api.get('tasks/' + listId)
         .then(res => {
           commit('setActiveTasks', { listId, tasks: res.data })
         })
         .catch(error => dispatch('showSnack', error))
     },
-    createTask ({ dispatch }, data) {
+    createTask({ dispatch }, data) {
       api.post('tasks/', data)
+        .then(res => {
+          dispatch('setTasks', data.listId)
+        })
+        .catch(error => dispatch('showSnack', error))
+    },
+
+    // COMMENTTTTTTZ
+    createComment({ dispatch }, data) {
+      api.post('tasks/comments/' + data.taskId, {
+        content: data.content
+      })
         .then(res => {
           dispatch('setTasks', data.listId)
         })

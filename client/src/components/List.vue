@@ -5,11 +5,11 @@
       
       <mdc-body class="counter" title="task count">{{ tasks.length }}</mdc-body>
 
-      <mdc-button title="view tasks" @click="tasks.length && (open = !open)">
+      <mdc-button title="view tasks" class="remove-height" @click="tasks.length && (open = !open)" :disabled="!tasks.length">
         <mdc-icon icon="keyboard_arrow_down"></mdc-icon>
       </mdc-button>
 
-      <mdc-button title="create task" class="add-task-button" @click="newTaskOpen = true">
+      <mdc-button title="create task" class="remove-height" @click="newTaskOpen = true">
         <mdc-icon icon="add"></mdc-icon>
       </mdc-button>
 
@@ -89,7 +89,7 @@ export default {
   color: white;
   text-align: center;
   border-radius: 50%;
-  line-height: 1.75rem;
+  line-height: 1.75rem !important;
   margin-right: 1rem;
 }
 .list-card {
@@ -108,10 +108,13 @@ export default {
     }
   }
 }
-.add-task-button {
+.remove-height {
   .mdc-icon {
     height: unset !important;
   }
+}
+.mdc-button__icon {
+  margin: 0 !important;
 }
 </style>
 
