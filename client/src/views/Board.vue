@@ -4,17 +4,21 @@
       <mdc-headline class='m-0 board-title'>Welcome to your board: <strong>{{activeBoard.title}}</strong></mdc-headline>
       <mdc-body class='m-0'>Created at: {{ activeBoard.created | moment('h:mm a — MM/DD/YY') }}</mdc-body>
     </header>
+    
     <section>
       <mdc-card v-if="newListOpen" class="add-list-card">
-      <form @submit.prevent="addNewList">
-        <mdc-textfield v-model="newListTitle" label="Title goes here" />
-        <mdc-button outlined type="submit">Create List</mdc-button>
-      </form>
+        <form @submit.prevent="addNewList">
+          <mdc-textfield v-model="newListTitle" label="Title goes here" />
+          <mdc-button outlined type="submit">Create List</mdc-button>
+        </form>
       </mdc-card>
+
       <list v-for="list in activeLists" :key="list._id" :listData="list" />
     </section>
+
     <mdc-fab fixed icon="add" @click="newListOpen = true">
     </mdc-fab>
+    
   </div>
 </template>
 

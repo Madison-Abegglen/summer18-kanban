@@ -1,25 +1,34 @@
 <template>
-  <mdc-card class="list-card" @click="open = true" :class="{open: open}">
+  <mdc-card class="list-card" @click="open = true" :class="{open: open && tasks.length}">
     <div class="list-header">
-      <mdc-card-header :title="$props.listData.title">
-      </mdc-card-header>
-      <mdc-body class="task-count">{{ tasks.length }}</mdc-body>
-      <mdc-button class="add-task-button" @click="newTaskOpen = true">
+      <mdc-card-header :title="$props.listData.title"></mdc-card-header>
+      
+      <mdc-body class="counter" title="task count">{{ tasks.length }}</mdc-body>
+
+      <mdc-button title="view tasks" @click="tasks.length && (open = !open)">
+        <mdc-icon icon="keyboard_arrow_down"></mdc-icon>
+      </mdc-button>
+
+      <mdc-button title="create task" class="add-task-button" @click="newTaskOpen = true">
         <mdc-icon icon="add"></mdc-icon>
       </mdc-button>
-      <mdc-button @click='deleteList()'>
+
+      <mdc-button title="remove list" @click='deleteList()'>
         <i class='material-icons mdc-button__icon'>delete_outline</i>
       </mdc-button>
     </div>
-    <div class="list-tasks">
-      <task />
-    </div>
+
+    <mdc-list two-line class="list-tasks">
+      <task v-for="task in tasks" :key="task._id" :taskData="task" />
+    </mdc-list>
+
     <mdc-dialog v-model='newTaskOpen' title='New Task' accept=''>
       <form @submit.prevent='addTask' class="form">
         <mdc-textfield required label='Task Content' v-model='taskContent' multiline rows="5" cols="70" class="task-content" />
         <mdc-button type='submit' @click='newTaskOpen = false' outlined>Create Task</mdc-button>
       </form>
     </mdc-dialog>
+  
   </mdc-card>
 </template>
 
@@ -60,23 +69,29 @@ export default {
 .list-header {
   display: flex;
   align-items: center;
-  .task-count {
-    margin-left: auto;
-    width: 1.75rem;
-    height: 1.75rem;
-    background-color: var(--mdc-theme-primary);
-    color: white;
-    text-align: center;
-    border-radius: 50%;
-    line-height: 1.75rem;
-    margin-right: 1rem;
-    transform: translateY(0.25rem);
-  }
+}
+.list-tasks {
+  margin-left: 1.5rem;
+  display: none;
 }
 .list-card.open {
+  .list-tasks {
+    display: unset;
+  }
 }
 </style>
 <style lang="scss">
+.counter {
+  margin-left: auto;
+  width: 1.75rem;
+  height: 1.75rem;
+  background-color: var(--mdc-theme-primary);
+  color: white;
+  text-align: center;
+  border-radius: 50%;
+  line-height: 1.75rem;
+  margin-right: 1rem;
+}
 .list-card {
   width: 60rem;
   max-width: 100%;
@@ -91,6 +106,11 @@ export default {
       width: 38.5rem;
       max-width: 100%;
     }
+  }
+}
+.add-task-button {
+  .mdc-icon {
+    height: unset !important;
   }
 }
 </style>
