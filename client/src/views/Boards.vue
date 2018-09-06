@@ -95,17 +95,6 @@ header {
     &:not(:hover) {
       box-shadow: none;
     }
-    .settings {
-      border-radius: 50%;
-      min-width: unset;
-      padding: 0;
-      width: 2rem;
-      height: 2rem;
-
-      i {
-        margin: 0;
-      }
-    }
   }
 }
 
@@ -142,5 +131,17 @@ ul.mdc-simple-menu__items.mdc-list {
 
 textarea {
   resize: none;
+}
+
+.settings {
+  border-radius: 50% !important;
+  min-width: unset !important;
+  padding: 0 !important;
+  width: 2rem;
+  height: 2rem !important;
+
+  i {
+    margin: 0;
+  }
 }
 </style>
