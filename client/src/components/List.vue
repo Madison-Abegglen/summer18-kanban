@@ -59,6 +59,16 @@ export default {
   max-width: 100%;
   margin: 1rem auto;
   padding: 0 1.5rem;
+  form {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+    button {
+      width: 38.5rem;
+      max-width: 100%;
+    }
+  }
 }
 </style>
 
