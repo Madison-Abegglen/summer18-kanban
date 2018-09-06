@@ -66,7 +66,8 @@ export default {
   }
 }
 header {
-  padding-top: 1rem;
-  padding-left: 2rem;
+  padding: 1.5rem 2rem;
+  background-color: var(--mdc-theme-tertiary);
+  color: white;
 }
 </style>

@@ -12,6 +12,7 @@
   --mdc-theme-background: #aacfd0 !important; */
   --mdc-theme-primary: #f8b500 !important;
   --mdc-theme-secondary: #393e46 !important;
+  --mdc-theme-tertiary: #5c636e !important;
   --mdc-theme-background: #f7f7f7 !important;
 }
 body {

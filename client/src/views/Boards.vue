@@ -1,6 +1,8 @@
 <template>
   <main class='boards'>
-    <mdc-headline align="center">WELCOME TO THE BOARDS!!!</mdc-headline>
+    <header>
+      <mdc-headline align="center">WELCOME TO THE BOARDS!!!</mdc-headline>
+    </header>
     <mdc-fab fixed icon='add' @click='open = true'></mdc-fab>
     <mdc-dialog v-model='open' title='New Board' accept=''>
       <form @submit.prevent='addBoard' class="form">
@@ -66,6 +68,14 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+header {
+  padding: 1.25rem 2rem;
+  margin-bottom: 1.5rem;
+  * {
+    margin: 0;
+  }
+}
+
 .form {
   display: flex;
   flex-direction: column;
