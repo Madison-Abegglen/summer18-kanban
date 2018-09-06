@@ -1,6 +1,6 @@
 <template>
   <mdc-card>
-    <mdc-card-header :title="listData.title">
+    <mdc-card-header :title="$props.listData.title">
     </mdc-card-header>
   </mdc-card>
 </template>

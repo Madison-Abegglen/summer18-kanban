@@ -11,7 +11,7 @@
         <mdc-button outlined type="submit">Create List</mdc-button>
       </form>
       </mdc-card>
-      <list v-for="list in activeLists" :key="list._id" :listData="List" />
+      <list v-for="list in activeLists" :key="list._id" :listData="list" />
     </section>
     <mdc-fab fixed icon="add" @click="newListOpen = true">
     </mdc-fab>
