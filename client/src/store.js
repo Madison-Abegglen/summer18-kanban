@@ -143,6 +143,12 @@ export default new Vuex.Store({
         .then(res => {
           commit('setActiveTasks', { listId, tasks: res.data })
         })
+    },
+    createTask({ dispatch }, data) {
+      api.post('tasks/', data)
+        .then(res => {
+          dispatch('setTasks', data.listId)
+        })
     }
   }
 })

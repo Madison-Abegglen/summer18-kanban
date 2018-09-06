@@ -5,7 +5,7 @@
       <mdc-body class='m-0'>Created at: {{ activeBoard.created | moment('h:mm a — MM/DD/YY') }}</mdc-body>
     </header>
     <section>
-      <mdc-card v-if="newListOpen">
+      <mdc-card v-if="newListOpen" class="add-list-card">
       <form @submit.prevent="addNewList">
         <mdc-textfield v-model="newListTitle" label="Title goes here" />
         <mdc-button outlined type="submit">Create List</mdc-button>
@@ -69,5 +69,16 @@ header {
   padding: 1.5rem 2rem;
   background-color: var(--mdc-theme-tertiary);
   color: white;
+}
+.add-list-card {
+  width: 60rem;
+  max-width: 100%;
+  margin: 1rem auto;
+  padding: 0 1.5rem;
+  form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 }
 </style>
