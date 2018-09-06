@@ -6,7 +6,7 @@
       <form @submit.prevent='addBoard' class="form">
         <mdc-textfield label='Title' v-model='newBoard.title' required />
         <mdc-textfield label='Description' v-model='newBoard.description' multiline rows="5" cols="70" class="description" />
-        <mdc-button type='submit' @click='open = false' outlined >Create Board</mdc-button>
+        <mdc-button type='submit' @click='open = false' outlined>Create Board</mdc-button>
       </form>
     </mdc-dialog>
     <mdc-list bordered class='list'>
@@ -29,21 +29,21 @@
 
 <script>
 export default {
-  name: "boards",
+  name: 'boards',
   created() {
     // blocks users not logged in
     if (!this.$store.state.user._id) {
-      this.$router.push({ name: "login" });
+      this.$router.push({ name: 'login' });
     }
   },
   mounted() {
-    this.$store.dispatch("getBoards");
+    this.$store.dispatch('getBoards');
   },
   data() {
     return {
       newBoard: {
-        title: "",
-        description: ""
+        title: '',
+        description: ''
       },
       open: false
     };
@@ -55,11 +55,11 @@ export default {
   },
   methods: {
     addBoard() {
-      this.$store.dispatch("addBoard", this.newBoard);
-      this.newBoard = { title: "", description: "" };
+      this.$store.dispatch('addBoard', this.newBoard);
+      this.newBoard = { title: '', description: '' };
     },
     deleteBoard(boardId) {
-      this.$store.dispatch("deleteBoard", boardId);
+      this.$store.dispatch('deleteBoard', boardId);
     }
   }
 };
@@ -102,6 +102,17 @@ export default {
 .board-title {
   text-transform: initial;
   text-decoration: underline;
+  color: #222 !important;
+  transition: color 0.2s;
+  will-change: color;
+  &:hover {
+    color: #666 !important;
+  }
+  letter-spacing: 0;
+  &::before,
+  &::after {
+    background-color: transparent !important;
+  }
 }
 </style>
 <style lang='scss'>
