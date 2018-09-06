@@ -1,7 +1,7 @@
 <template>
   <main class='boards'>
     <header>
-      <mdc-headline align="center">WELCOME TO THE BOARDS!!!</mdc-headline>
+      <mdc-headline align="center">WELCOME TO YOUR BOARDS</mdc-headline>
     </header>
     <mdc-fab fixed icon='add' @click='open = true'></mdc-fab>
     <mdc-dialog v-model='open' title='New Board' accept=''>
@@ -31,21 +31,21 @@
 
 <script>
 export default {
-  name: 'boards',
+  name: "boards",
   created() {
     // blocks users not logged in
     if (!this.$store.state.user._id) {
-      this.$router.push({ name: 'login' });
+      this.$router.push({ name: "login" });
     }
   },
   mounted() {
-    this.$store.dispatch('getBoards');
+    this.$store.dispatch("getBoards");
   },
   data() {
     return {
       newBoard: {
-        title: '',
-        description: ''
+        title: "",
+        description: ""
       },
       open: false
     };
@@ -57,11 +57,11 @@ export default {
   },
   methods: {
     addBoard() {
-      this.$store.dispatch('addBoard', this.newBoard);
-      this.newBoard = { title: '', description: '' };
+      this.$store.dispatch("addBoard", this.newBoard);
+      this.newBoard = { title: "", description: "" };
     },
     deleteBoard(boardId) {
-      this.$store.dispatch('deleteBoard', boardId);
+      this.$store.dispatch("deleteBoard", boardId);
     }
   }
 };

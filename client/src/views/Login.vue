@@ -1,7 +1,7 @@
 <template>
   <main class='login'>
     <form @submit.prevent='submitForm' class='login-form'>
-      <mdc-display typo='headline2' class='title'>Kanban</mdc-display>
+      <mdc-display typo='headline2' class='title'>BUMBLE<br>kanban</mdc-display>
       <transition mode='out-in'>
         <mdc-textfield type='text' v-if='!isLogin' v-model='name' label='Name' box required />
       </transition>
@@ -17,12 +17,12 @@
 
 <script>
 export default {
-  name: 'login',
+  name: "login",
   data() {
     return {
-      name: '',
-      email: '',
-      password: '',
+      name: "",
+      email: "",
+      password: "",
       isLogin: true
     };
   },
@@ -34,23 +34,23 @@ export default {
       this.login();
     },
     register() {
-      this.$store.dispatch('register', {
+      this.$store.dispatch("register", {
         name: this.name,
         email: this.email,
         password: this.password
       });
-      this.name = '';
-      this.email = '';
-      this.password = '';
+      this.name = "";
+      this.email = "";
+      this.password = "";
       this.login = true;
     },
     login() {
-      this.$store.dispatch('login', {
+      this.$store.dispatch("login", {
         email: this.email,
         password: this.password
       });
-      this.email = '';
-      this.password = '';
+      this.email = "";
+      this.password = "";
     }
   }
 };

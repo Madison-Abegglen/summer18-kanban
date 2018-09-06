@@ -1,5 +1,5 @@
 <template>
-  <mdc-card class="list-card">
+  <mdc-card class="list-card" @click="open = true" :class="{open: open}">
     <div class="list-header">
       <mdc-card-header :title="$props.listData.title">
       </mdc-card-header>
@@ -11,8 +11,7 @@
       </mdc-button>
     </div>
     <div class="list-tasks">
-      <mdc-card >
-      </mdc-card>
+      <task />
     </div>
     <mdc-dialog v-model='newTaskOpen' title='New Task' accept=''>
       <form @submit.prevent='addTask' class="form">
@@ -24,9 +23,11 @@
 </template>
 
 <script>
+import Task from "@/components/Task";
 export default {
   name: "list",
   props: ["listData"],
+  components: { Task },
   computed: {
     tasks() {
       return this.$store.state.activeTasks[this.$props.listData._id];
@@ -35,7 +36,8 @@ export default {
   data() {
     return {
       newTaskOpen: false,
-      taskContent: ""
+      taskContent: "",
+      open: false
     };
   },
   methods: {
@@ -60,6 +62,8 @@ export default {
   .add-task-button {
     margin-left: auto;
   }
+}
+.list-card.open {
 }
 </style>
 <style lang="scss">
