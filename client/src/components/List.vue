@@ -3,7 +3,7 @@
     <div class="list-header">
       <mdc-card-header :title="$props.listData.title">
       </mdc-card-header>
-      <mdc-body>{{ tasks.length }}</mdc-body>
+      <mdc-body class="task-count">{{ tasks.length }}</mdc-body>
       <mdc-button class="add-task-button" @click="newTaskOpen = true">
         <mdc-icon icon="add"></mdc-icon>
       </mdc-button>
@@ -60,8 +60,17 @@ export default {
 .list-header {
   display: flex;
   align-items: center;
-  .add-task-button {
+  .task-count {
     margin-left: auto;
+    width: 1.75rem;
+    height: 1.75rem;
+    background-color: var(--mdc-theme-primary);
+    color: white;
+    text-align: center;
+    border-radius: 50%;
+    line-height: 1.75rem;
+    margin-right: 1rem;
+    transform: translateY(0.25rem);
   }
 }
 .list-card.open {
