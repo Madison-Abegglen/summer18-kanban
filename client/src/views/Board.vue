@@ -1,8 +1,8 @@
 <template>
   <div class="board">
     <header>
-      <mdc-headline class='m-0'>Welcome to your board: {{activeBoard.title}}</mdc-headline>
-      <mdc-body class='m-0'>Created At: {{ activeBoard.created | moment('h:mm a — MM/DD/YY') }}</mdc-body>
+      <mdc-headline class='m-0 board-title'>Welcome to your board: <strong>{{activeBoard.title}}</strong></mdc-headline>
+      <mdc-body class='m-0'>Created at: {{ activeBoard.created | moment('h:mm a — MM/DD/YY') }}</mdc-body>
     </header>
     <section>
       <mdc-card v-if="newListOpen">
@@ -59,6 +59,11 @@ export default {
 <style lang="scss">
 .m-0 {
   margin: 0;
+}
+.board-title {
+  strong {
+    font-weight: 500;
+  }
 }
 header {
   padding-top: 1rem;
