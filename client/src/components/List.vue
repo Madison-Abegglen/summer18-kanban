@@ -1,13 +1,13 @@
 <template>
   <mdc-card>
     <mdc-card-header :title="list.title">
-    </mdc-card-header>  
+    </mdc-card-header>
   </mdc-card>
 </template>
 
 <script>
 export default {
-  name: "List",
+  name: "list",
   props: ["listData"]
 };
 </script>
