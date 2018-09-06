@@ -92,6 +92,7 @@ header {
     overflow: visible;
     transition: box-shadow 0.2s;
     will-change: box-shadow;
+    background-color: white;
     &:not(:hover) {
       box-shadow: none;
     }
