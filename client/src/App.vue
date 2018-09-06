@@ -6,6 +6,10 @@
 </template>
 
 <style>
+:root {
+  --mdc-theme-primary: unset !important;
+  --mdc-theme-secondary: unset !important;
+}
 body {
   height: 100vh;
   margin: 0;
