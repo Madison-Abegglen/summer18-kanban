@@ -7,9 +7,13 @@
         <mdc-icon icon="add"></mdc-icon>
       </mdc-button>
     </div>
+    <div class="list-tasks">
+      <mdc-card >
+      </mdc-card>
+    </div>
     <mdc-dialog v-model='newTaskOpen' title='New Task' accept=''>
       <form @submit.prevent='addTask' class="form">
-        <mdc-textfield label='Task Content' v-model='taskContent' multiline rows="5" cols="70" class="task-content" />
+        <mdc-textfield required label='Task Content' v-model='taskContent' multiline rows="5" cols="70" class="task-content" />
         <mdc-button type='submit' @click='newTaskOpen = false' outlined>Create Task</mdc-button>
       </form>
     </mdc-dialog>
