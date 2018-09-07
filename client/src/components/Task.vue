@@ -1,5 +1,5 @@
 <template>
-  <drag :transfer-data='$props.taskData._id'>
+  <drag :transfer-data='{ taskId: $props.taskData._id, oldListId: $props.taskData.listid }'>
     <mdc-list-item>
       <div class="task-content">
         <span>{{$props.taskData.content}}</span>
