@@ -1,6 +1,6 @@
 <template>
   <main class='boards'>
-    <header>
+    <header class='mdc-elevation mdc-elevation--z4'>
       <mdc-headline align="center">WELCOME TO YOUR BOARDS</mdc-headline>
     </header>
     <mdc-fab fixed icon='add' @click='open = true'></mdc-fab>

@@ -1,6 +1,6 @@
 <template>
   <div class="board">
-    <header>
+    <header class='mdc-elevation mdc-elevation--z4'>
       <mdc-headline class='m-0 board-title'>Welcome to your board:
         <strong>{{activeBoard.title}}</strong>
       </mdc-headline>
