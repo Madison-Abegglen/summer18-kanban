@@ -1,35 +1,37 @@
 <template>
-  <mdc-card class="list-card" @click="open = true" :class="{open: open && tasks && tasks.length}">
-    <div class="list-header">
-      <mdc-card-header :title="$props.listData.title"></mdc-card-header>
+  <drop @drop='moveTask'>
+    <mdc-card class="list-card" @click="open = true" :class="{open: open && tasks && tasks.length}">
+      <div class="list-header">
+        <mdc-card-header :title="$props.listData.title"></mdc-card-header>
 
-      <mdc-body class="counter" title="task count">{{ tasks ? tasks.length : '' }}</mdc-body>
+        <mdc-body class="counter" title="task count">{{ tasks ? tasks.length : '' }}</mdc-body>
 
-      <mdc-button title="view tasks" class="remove-height" @click="tasks && tasks.length && (open = !open)" :disabled="!tasks || !tasks.length">
-        <mdc-icon icon="keyboard_arrow_down"></mdc-icon>
-      </mdc-button>
+        <mdc-button title="view tasks" class="remove-height" @click="tasks && tasks.length && (open = !open)" :disabled="!tasks || !tasks.length">
+          <mdc-icon icon="keyboard_arrow_down"></mdc-icon>
+        </mdc-button>
 
-      <mdc-button title="create task" class="remove-height" @click="newTaskOpen = true">
-        <mdc-icon icon="add"></mdc-icon>
-      </mdc-button>
+        <mdc-button title="create task" class="remove-height" @click="newTaskOpen = true">
+          <mdc-icon icon="add"></mdc-icon>
+        </mdc-button>
 
-      <mdc-button title="remove list" @click='deleteList()'>
-        <i class='material-icons mdc-button__icon'>delete_outline</i>
-      </mdc-button>
-    </div>
+        <mdc-button title="remove list" @click='deleteList()'>
+          <i class='material-icons mdc-button__icon'>delete_outline</i>
+        </mdc-button>
+      </div>
 
-    <mdc-list two-line class="list-tasks">
-      <task v-for="task in tasks" :key="task._id" :taskData="task" />
-    </mdc-list>
+      <mdc-list two-line class="list-tasks">
+        <task v-for="task in tasks" :key="task._id" :taskData="task" />
+      </mdc-list>
 
-    <mdc-dialog v-model='newTaskOpen' title='New Task' accept=''>
-      <form @submit.prevent='addTask' class="form" key='new-task-form'>
-        <mdc-textfield required label='Task Content' v-model='taskContent' multiline rows="5" cols="70" class="task-content" />
-        <mdc-button type='submit' @click='newTaskOpen = false' outlined>Create Task</mdc-button>
-      </form>
-    </mdc-dialog>
+      <mdc-dialog v-model='newTaskOpen' title='New Task' accept=''>
+        <form @submit.prevent='addTask' class="form" key='new-task-form'>
+          <mdc-textfield required label='Task Content' v-model='taskContent' multiline rows="5" cols="70" class="task-content" />
+          <mdc-button type='submit' @click='newTaskOpen = false' outlined>Create Task</mdc-button>
+        </form>
+      </mdc-dialog>
 
-  </mdc-card>
+    </mdc-card>
+  </drop>
 </template>
 
 <script>
@@ -60,6 +62,9 @@ export default {
     },
     deleteList() {
       this.$store.dispatch('deleteList', this.$props.listData._id);
+    },
+    moveTask(taskId) {
+      this.$store.dispatch('moveTask', { taskId, newListId: this.$props.taskContent._id })
     }
   }
 };

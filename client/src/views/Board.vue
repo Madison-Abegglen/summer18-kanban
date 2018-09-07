@@ -18,8 +18,12 @@
       <list class='list' v-for="list in activeLists" :key="list._id" :listData="list" />
     </transition-group>
 
-    <mdc-fab fixed icon="add" @click="newListOpen = true">
+    <mdc-fab fixed icon="add" @click="newListOpen = !newListOpen" class='add-list-button' :class='{ rotate45: newListOpen }'>
     </mdc-fab>
+    <!-- <mdc-button class='add-list-button' @click='newListOpen = !newListOpen' :class='{ opened: newListOpen }'>
+      <i class="material-icons mdc-button__icon">add</i>
+      {{ newListOpen ? 'Close' : 'Add list' }}
+    </mdc-button> -->
 
   </div>
 </template>
@@ -108,5 +112,12 @@ header {
 .mdc-text-field {
   margin: 0.5rem 0 1rem !important;
   width: 15rem;
+}
+
+.add-list-button {
+  transition: transform 0.2s;
+}
+.rotate45 {
+  transform: rotate(45deg);
 }
 </style>

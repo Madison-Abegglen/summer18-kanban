@@ -6,8 +6,11 @@ import store from './store'
 import VueMDCAdapter from 'vue-mdc-adapter'
 import 'vue-mdc-adapter/dist/vue-mdc-adapter.min.css'
 
-Vue.use(VueMDCAdapter)
+import VueDragDrop from 'vue-drag-drop'
+
 Vue.use(require('vue-moment'))
+Vue.use(VueMDCAdapter)
+Vue.use(VueDragDrop)
 
 Vue.config.productionTip = false
 

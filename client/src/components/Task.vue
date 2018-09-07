@@ -1,28 +1,30 @@
 <template>
-  <mdc-list-item>
-    <div class="task-content">
-      <span>{{$props.taskData.content}}</span>
-      <mdc-body class="counter" title="comment count">{{ comments.length }}</mdc-body>
+  <drag :transfer-data='$props.taskData._id'>
+    <mdc-list-item>
+      <div class="task-content">
+        <span>{{$props.taskData.content}}</span>
+        <mdc-body class="counter" title="comment count">{{ comments.length }}</mdc-body>
 
-      <mdc-button dense title="view comments" @click="comments.length && (open = !open)">
-        <mdc-icon icon="keyboard_arrow_down"></mdc-icon>
-      </mdc-button>
+        <mdc-button dense title="view comments" @click="comments.length && (open = !open)">
+          <mdc-icon icon="keyboard_arrow_down"></mdc-icon>
+        </mdc-button>
 
-      <mdc-button dense title="create comment" class="add-comment-button" @click="newCommentOpen = true">
-        <mdc-icon icon="add"></mdc-icon>
-      </mdc-button>
+        <mdc-button dense title="create comment" class="add-comment-button" @click="newCommentOpen = true">
+          <mdc-icon icon="add"></mdc-icon>
+        </mdc-button>
 
-      <mdc-button dense title="remove task" @click='deleteTask'>
-        <i class='material-icons mdc-button__icon'>delete_outline</i>
-      </mdc-button>
-    </div>
-    <mdc-dialog v-model='newCommentOpen' title='New Comment' accept=''>
-      <form @submit.prevent='addComment' class="form">
-        <mdc-textfield required label='Comment Content' v-model='commentContent' multiline rows="5" cols="70" class="comment-content" />
-        <mdc-button type='submit' @click='newCommentOpen = false' outlined>Create Task</mdc-button>
-      </form>
-    </mdc-dialog>
-  </mdc-list-item>
+        <mdc-button dense title="remove task" @click='deleteTask'>
+          <i class='material-icons mdc-button__icon'>delete_outline</i>
+        </mdc-button>
+      </div>
+      <mdc-dialog v-model='newCommentOpen' title='New Comment' accept=''>
+        <form @submit.prevent='addComment' class="form">
+          <mdc-textfield required label='Comment content' v-model='commentContent' multiline rows="5" cols="70" class="comment-content" />
+          <mdc-button type='submit' @click='newCommentOpen = false' outlined>Create task</mdc-button>
+        </form>
+      </mdc-dialog>
+    </mdc-list-item>
+  </drag>
 </template>
 
 <script>
@@ -62,11 +64,22 @@ export default {
   .counter {
     align-self: flex-end;
     color: white;
-    background-color: #5c636eaa;
+    background-color: #5c636e66;
+    transition: background-color 0.2s;
   }
   *:not(span) {
-    color: #5c636eaa;
+    color: #5c636e66;
     transform: scale(0.85);
+    transition: color 0.2s;
+  }
+  &:hover {
+    .counter {
+      background-color: #5c636eaa;
+      color: white;
+    }
+    *:not(span) {
+      color: #5c636eaa;
+    }
   }
 }
 </style>
