@@ -40,14 +40,9 @@ export default {
       return this.$store.state.activeLists;
     }
   },
-  created() {
-    // blocks users not logged in
-    if (!this.$store.state.user._id) {
-      this.$router.push({ name: 'login' });
-    }
-
+  async created() {
     // dispatch boardId to setBoard for activeBoard
-    this.$store.dispatch('setBoard', this.$props.boardId);
+    await this.$store.dispatch('setBoard', this.$props.boardId);
   },
   props: ['boardId'],
   components: { List },
@@ -112,6 +107,11 @@ header {
 .board .mdc-text-field {
   margin: 0.5rem 0 1rem !important;
   width: 15rem;
+}
+
+.board .comment-content .mdc-textfield,
+.board .task-content .mdc-textfield {
+  width: 100%;
 }
 
 .add-list-button {

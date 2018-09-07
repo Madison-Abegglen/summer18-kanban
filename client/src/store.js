@@ -24,33 +24,34 @@ export default new Vuex.Store({
     activeBoard: {},
     snack: {},
     activeLists: [],
-    activeTasks: {}
+    activeTasks: {},
+    reroute: undefined
   },
   getters: {
     loggedIn: state => !!state.user._id
   },
   mutations: {
-    setUser(state, user) {
+    setUser (state, user) {
       state.user = user
     },
-    setBoards(state, boards) {
+    setBoards (state, boards) {
       state.boards = boards
     },
-    setSnack(state, snack) {
+    setSnack (state, snack) {
       state.snack = snack
     },
-    setActiveBoard(state, activeBoard) {
+    setActiveBoard (state, activeBoard) {
       state.activeBoard = activeBoard
     },
-    setActiveLists(state, activeLists) {
+    setActiveLists (state, activeLists) {
       state.activeLists = activeLists
     },
-    setActiveTasks(state, { listId, tasks }) {
+    setActiveTasks (state, { listId, tasks }) {
       Vue.set(state.activeTasks, listId, tasks)
     }
   },
   actions: {
-    showSnack({ commit }, snack) {
+    showSnack ({ commit }, snack) {
       if (snack instanceof Error) {
         if (snack.response && snack.response.data && snack.response.data.error) {
           snack = { message: snack.response.data.error, actionText: 'OK' }
@@ -62,38 +63,38 @@ export default new Vuex.Store({
     },
 
     // AUTH STUFF
-    register({ commit, dispatch }, newUser) {
+    register ({ commit, dispatch, state }, newUser) {
       auth.post('register', newUser)
         .then(res => {
           commit('setUser', res.data)
-          router.push({ name: 'boards' })
+          router.push(state.reroute || { name: 'boards' })
         })
         .catch(error => dispatch('showSnack', error))
     },
-    authenticate({ commit, dispatch }) {
+    authenticate ({ commit, state }) {
       auth.get('authenticate')
         .then(res => {
           commit('setUser', res.data)
-          router.push({ name: 'boards' })
+          router.push(state.reroute || { name: 'boards' })
         })
         .catch(() => { }) // Swallow your errors
     },
-    login({ commit, dispatch }, creds) {
+    login ({ commit, dispatch, state }, creds) {
       auth.post('login', creds)
         .then(res => {
           commit('setUser', res.data)
-          router.push({ name: 'boards' })
+          router.push(state.reroute || { name: 'boards' })
         })
         .catch(error => dispatch('showSnack', error))
     },
-    logout({ commit, dispatch }) {
+    logout ({ commit, dispatch }) {
       auth.delete('logout')
         .then(() => commit('setUser', {}))
         .catch(error => dispatch('showSnack', error))
     },
 
     // BOARDS
-    getBoards({ commit, dispatch }) {
+    getBoards ({ commit, dispatch }) {
       api.get('boards')
         .then(res => {
           commit('setBoards', res.data.map(board => {
@@ -103,14 +104,14 @@ export default new Vuex.Store({
         })
         .catch(error => dispatch('showSnack', error))
     },
-    addBoard({ commit, dispatch }, boardData) {
+    addBoard ({ commit, dispatch }, boardData) {
       api.post('boards', boardData)
         .then(serverBoard => {
           dispatch('getBoards')
         })
         .catch(error => dispatch('showSnack', error))
     },
-    deleteBoard({ commit, dispatch }, boardId) {
+    deleteBoard ({ commit, dispatch }, boardId) {
       api.delete('boards/' + boardId)
         .then(res => {
           dispatch('getBoards')
@@ -119,14 +120,26 @@ export default new Vuex.Store({
     },
 
     // SINGULAR BOARD
-    setBoard({ commit, dispatch, state }, boardId) {
-      const activeBoard = state.boards.find(board => board._id === boardId)
+    async setBoard ({ commit, dispatch, state }, boardId) {
+      let activeBoard = state.boards.find(board => board._id === boardId)
+      if (!activeBoard) {
+        try {
+          let { data: boards } = await api.get('boards/')
+          boards = boards.map(board => {
+            board.open = false
+            return board
+          })
+          activeBoard = boards.find(board => board._id === boardId)
+        } catch (error) {
+          dispatch('showSnack', error)
+        }
+      }
       commit('setActiveBoard', activeBoard)
       dispatch('setLists', boardId)
     },
 
     // LISTS
-    setLists({ commit, dispatch, state }, boardId) {
+    setLists ({ commit, dispatch, state }, boardId) {
       api.get('lists/' + boardId)
         .then(res => {
           commit('setActiveLists', res.data)
@@ -136,37 +149,40 @@ export default new Vuex.Store({
         })
         .catch(error => dispatch('showSnack', error))
     },
-    createList({ dispatch, state }, title) {
+    createList ({ dispatch, state }, title) {
       api.post('lists/', { title, boardId: state.activeBoard._id })
         .then(res => {
           dispatch('setLists', state.activeBoard._id)
         })
         .catch(error => dispatch('showSnack', error))
     },
-    deleteList({ dispatch, state }, listId) {
+    deleteList ({ dispatch, state }, listId) {
       api.delete('lists/' + listId)
         .then(res => {
           dispatch('setLists', state.activeBoard._id)
         })
         .catch(error => dispatch('showSnack', error))
     },
+    clearLists ({ commit }) {
+      commit('setActiveLists', [])
+    },
 
     // TASKZZZZ
-    setTasks({ commit, dispatch }, listId) {
+    setTasks ({ commit, dispatch }, listId) {
       api.get('tasks/' + listId)
         .then(res => {
           commit('setActiveTasks', { listId, tasks: res.data })
         })
         .catch(error => dispatch('showSnack', error))
     },
-    createTask({ dispatch }, data) {
+    createTask ({ dispatch }, data) {
       api.post('tasks/', data)
         .then(res => {
           dispatch('setTasks', data.listId)
         })
         .catch(error => dispatch('showSnack', error))
     },
-    moveTask({ dispatch }, data) {
+    moveTask ({ dispatch }, data) {
       api.put('tasks/' + data.taskId, { listId: data.newListId })
         .then(res => {
           dispatch('setTasks', data.newListId)
@@ -176,7 +192,7 @@ export default new Vuex.Store({
     },
 
     // COMMENTTTTTTZ
-    createComment({ dispatch }, data) {
+    createComment ({ dispatch }, data) {
       api.post('tasks/comments/' + data.taskId, {
         content: data.content
       })

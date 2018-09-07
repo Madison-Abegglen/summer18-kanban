@@ -39,6 +39,7 @@ export default {
     }
   },
   mounted () {
+    this.$store.dispatch('clearLists')
     this.$store.dispatch('getBoards')
   },
   data () {
