@@ -109,7 +109,7 @@ header {
   transition: all 0.2s;
 }
 
-.mdc-text-field {
+.board .mdc-text-field {
   margin: 0.5rem 0 1rem !important;
   width: 15rem;
 }
