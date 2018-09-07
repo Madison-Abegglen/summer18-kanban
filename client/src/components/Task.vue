@@ -1,5 +1,5 @@
 <template>
-    <mdc-list-item>
+    <mdc-list-item class="master-list-list">
       <div class="task-content">
         <drag :transfer-data='{ taskId: $props.taskData._id, oldListId: $props.taskData.listId }'>
           <span>{{$props.taskData.content}}</span>
@@ -18,38 +18,48 @@
           <i class='material-icons mdc-button__icon'>delete_outline</i>
         </mdc-button>
       </div>
+
+      <mdc-list v-if="open" class="comment-list">
+        <comment v-for="comment in comments" :key="comment._id" :commentData="comment" />
+      </mdc-list>
+
       <mdc-dialog v-model='newCommentOpen' title='New Comment' accept=''>
         <form @submit.prevent='addComment' class="form">
           <mdc-textfield required label='Comment content' v-model='commentContent' multiline rows="5" cols="70" class="comment-content" />
-          <mdc-button type='submit' @click='newCommentOpen = false' outlined>Create task</mdc-button>
+          <mdc-button type='submit' @click='newCommentOpen = false' outlined>Create Comment</mdc-button>
         </form>
       </mdc-dialog>
+
     </mdc-list-item>
 </template>
 
 <script>
+import Comment from "@/components/Comment";
 export default {
-  name: 'task',
-  props: ['taskData'],
+  name: "task",
+  props: ["taskData"],
   computed: {
     comments() {
       return this.$props.taskData.comments;
     }
   },
+  components: { Comment },
   data() {
     return {
       open: false,
       newCommentOpen: false,
-      commentContent: ''
+      commentContent: "",
+      nowCommentOpen: false
     };
   },
   methods: {
     addComment() {
-      this.$store.dispatch('createComment', {
+      this.$store.dispatch("createComment", {
         taskId: this.$props.taskData._id,
         content: this.commentContent,
         listId: this.$props.taskData.listId
       });
+      this.commentContent = "";
     },
     deleteTask() {}
   }
@@ -81,5 +91,13 @@ export default {
       color: #5c636eaa;
     }
   }
+}
+.comment-list {
+  width: 100%;
+}
+.master-list-list {
+  display: flex;
+  flex-direction: column;
+  height: unset !important;
 }
 </style>
