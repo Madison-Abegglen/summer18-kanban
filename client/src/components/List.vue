@@ -64,7 +64,7 @@ export default {
       this.$store.dispatch('deleteList', this.$props.listData._id);
     },
     moveTask(data) {
-      this.$store.dispatch('moveTask', { ...data, newListId: this.$props.taskContent._id })
+      this.$store.dispatch('moveTask', { ...data, newListId: this.$props.listData._id })
     }
   }
 };

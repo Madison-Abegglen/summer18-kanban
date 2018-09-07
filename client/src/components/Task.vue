@@ -1,8 +1,9 @@
 <template>
-  <drag :transfer-data='{ taskId: $props.taskData._id, oldListId: $props.taskData.listid }'>
     <mdc-list-item>
       <div class="task-content">
-        <span>{{$props.taskData.content}}</span>
+        <drag :transfer-data='{ taskId: $props.taskData._id, oldListId: $props.taskData.listid }'>
+          <span>{{$props.taskData.content}}</span>
+        </drag>
         <mdc-body class="counter" title="comment count">{{ comments.length }}</mdc-body>
 
         <mdc-button dense title="view comments" @click="comments.length && (open = !open)">
@@ -24,7 +25,6 @@
         </form>
       </mdc-dialog>
     </mdc-list-item>
-  </drag>
 </template>
 
 <script>
