@@ -1,11 +1,11 @@
 <template>
-  <mdc-card class="list-card" @click="open = true" :class="{open: open && tasks.length}">
+  <mdc-card class="list-card" @click="open = true" :class="{open: open && tasks && tasks.length}">
     <div class="list-header">
       <mdc-card-header :title="$props.listData.title"></mdc-card-header>
-      
-      <mdc-body class="counter" title="task count">{{ tasks.length }}</mdc-body>
 
-      <mdc-button title="view tasks" class="remove-height" @click="tasks.length && (open = !open)" :disabled="!tasks.length">
+      <mdc-body class="counter" title="task count">{{ tasks ? tasks.length : '' }}</mdc-body>
+
+      <mdc-button title="view tasks" class="remove-height" @click="tasks && tasks.length && (open = !open)" :disabled="!tasks || !tasks.length">
         <mdc-icon icon="keyboard_arrow_down"></mdc-icon>
       </mdc-button>
 
@@ -23,20 +23,20 @@
     </mdc-list>
 
     <mdc-dialog v-model='newTaskOpen' title='New Task' accept=''>
-      <form @submit.prevent='addTask' class="form">
+      <form @submit.prevent='addTask' class="form" key='new-task-form'>
         <mdc-textfield required label='Task Content' v-model='taskContent' multiline rows="5" cols="70" class="task-content" />
         <mdc-button type='submit' @click='newTaskOpen = false' outlined>Create Task</mdc-button>
       </form>
     </mdc-dialog>
-  
+
   </mdc-card>
 </template>
 
 <script>
-import Task from "@/components/Task";
+import Task from '@/components/Task';
 export default {
-  name: "list",
-  props: ["listData"],
+  name: 'list',
+  props: ['listData'],
   components: { Task },
   computed: {
     tasks() {
@@ -46,20 +46,20 @@ export default {
   data() {
     return {
       newTaskOpen: false,
-      taskContent: "",
+      taskContent: '',
       open: false
     };
   },
   methods: {
     addTask() {
-      this.$store.dispatch("createTask", {
+      this.$store.dispatch('createTask', {
         listId: this.$props.listData._id,
         content: this.taskContent
       });
-      this.taskContent = "";
+      this.taskContent = '';
     },
     deleteList() {
-      this.$store.dispatch("deleteList", this.$props.listData._id);
+      this.$store.dispatch('deleteList', this.$props.listData._id);
     }
   }
 };
@@ -84,7 +84,9 @@ export default {
 .counter {
   margin-left: auto;
   width: 1.75rem;
+  min-width: 1.75rem;
   height: 1.75rem;
+  min-height: 1.75rem;
   background-color: var(--mdc-theme-primary);
   color: white;
   text-align: center;
@@ -117,4 +119,3 @@ export default {
   margin: 0 !important;
 }
 </style>
-

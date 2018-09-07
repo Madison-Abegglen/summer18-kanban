@@ -5,7 +5,7 @@
   </div>
 </template>
 
-<style>
+<style lang='scss'>
 :root {
   /* --mdc-theme-primary: #5da0a2 !important;
   --mdc-theme-secondary: #f4f7f7 !important;
@@ -14,6 +14,17 @@
   --mdc-theme-secondary: #393e46 !important;
   --mdc-theme-tertiary: #5c636e !important;
   --mdc-theme-background: #f7f7f7 !important;
+}
+.mdc-text-field--focused:not(.mdc-text-field--disabled) {
+  .mdc-floating-label {
+    color: var(--mdc-theme-tertiary) !important;
+    &::after {
+      color: var(--mdc-theme-tertiary) !important;
+    }
+  }
+  .mdc-line-ripple {
+    background-color: var(--mdc-theme-primary) !important;
+  }
 }
 body {
   height: 100vh;

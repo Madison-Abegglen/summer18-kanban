@@ -31,40 +31,40 @@
 
 <script>
 export default {
-  name: "boards",
-  created() {
+  name: 'boards',
+  created () {
     // blocks users not logged in
     if (!this.$store.state.user._id) {
-      this.$router.push({ name: "login" });
+      this.$router.push({ name: 'login' })
     }
   },
-  mounted() {
-    this.$store.dispatch("getBoards");
+  mounted () {
+    this.$store.dispatch('getBoards')
   },
-  data() {
+  data () {
     return {
       newBoard: {
-        title: "",
-        description: ""
+        title: '',
+        description: ''
       },
       open: false
-    };
+    }
   },
   computed: {
-    boards() {
-      return this.$store.state.boards;
+    boards () {
+      return this.$store.state.boards
     }
   },
   methods: {
-    addBoard() {
-      this.$store.dispatch("addBoard", this.newBoard);
-      this.newBoard = { title: "", description: "" };
+    addBoard () {
+      this.$store.dispatch('addBoard', this.newBoard)
+      this.newBoard = { title: '', description: '' }
     },
-    deleteBoard(boardId) {
-      this.$store.dispatch("deleteBoard", boardId);
+    deleteBoard (boardId) {
+      this.$store.dispatch('deleteBoard', boardId)
     }
   }
-};
+}
 </script>
 
 <style lang='scss' scoped>

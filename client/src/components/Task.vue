@@ -12,7 +12,7 @@
         <mdc-icon icon="add"></mdc-icon>
       </mdc-button>
 
-      <mdc-button dense title="remove task" @click='deleteTask()'>
+      <mdc-button dense title="remove task" @click='deleteTask'>
         <i class='material-icons mdc-button__icon'>delete_outline</i>
       </mdc-button>
     </div>
@@ -27,8 +27,8 @@
 
 <script>
 export default {
-  name: "task",
-  props: ["taskData"],
+  name: 'task',
+  props: ['taskData'],
   computed: {
     comments() {
       return this.$props.taskData.comments;
@@ -38,17 +38,18 @@ export default {
     return {
       open: false,
       newCommentOpen: false,
-      commentContent: ""
+      commentContent: ''
     };
   },
   methods: {
     addComment() {
-      this.$store.dispatch("createComment", {
+      this.$store.dispatch('createComment', {
         taskId: this.$props.taskData._id,
         content: this.commentContent,
         listId: this.$props.taskData.listId
       });
-    }
+    },
+    deleteTask() {}
   }
 };
 </script>
