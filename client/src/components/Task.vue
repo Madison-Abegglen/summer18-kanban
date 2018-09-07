@@ -1,7 +1,7 @@
 <template>
     <mdc-list-item>
       <div class="task-content">
-        <drag :transfer-data='{ taskId: $props.taskData._id, oldListId: $props.taskData.listid }'>
+        <drag :transfer-data='{ taskId: $props.taskData._id, oldListId: $props.taskData.listId }'>
           <span>{{$props.taskData.content}}</span>
         </drag>
         <mdc-body class="counter" title="comment count">{{ comments.length }}</mdc-body>
