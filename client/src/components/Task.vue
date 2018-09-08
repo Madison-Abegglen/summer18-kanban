@@ -1,8 +1,8 @@
 <template>
     <mdc-list-item class="master-list-list">
       <div class="task-content">
-        <drag :transfer-data='{ taskId: $props.taskData._id, oldListId: $props.taskData.listId }'>
-          <span>{{$props.taskData.content}}</span>
+        <drag :transfer-data='{ taskId: $props.taskData._id, oldListId: $props.taskData.listId }' class='title'>
+          {{$props.taskData.content}}
         </drag>
         <mdc-body class="counter" title="comment count">{{ comments.length }}</mdc-body>
 
@@ -73,11 +73,11 @@ export default {
   align-items: center;
   .counter {
     align-self: flex-end;
-    color: white;
+    color: white !important;
     background-color: #5c636e66;
-    transition: background-color 0.2s;
+    transition: background-color 0.2s !important;
   }
-  *:not(span) {
+  *:not(.title) {
     color: #5c636e66;
     transform: scale(0.85);
     transition: color 0.2s;
@@ -85,11 +85,14 @@ export default {
   &:hover {
     .counter {
       background-color: #5c636eaa;
-      color: white;
     }
-    *:not(span) {
+    *:not(.title) {
       color: #5c636eaa;
     }
+  }
+  .title {
+    font-size: 1.15rem;
+    color: black;
   }
 }
 .comment-list {
