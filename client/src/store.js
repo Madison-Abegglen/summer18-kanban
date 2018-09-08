@@ -130,6 +130,7 @@ export default new Vuex.Store({
             return board
           })
           activeBoard = boards.find(board => board._id === boardId)
+          commit('setBoards', boards)
         } catch (error) {
           dispatch('showSnack', error)
         }
