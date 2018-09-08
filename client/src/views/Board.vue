@@ -102,6 +102,8 @@ header {
 .list {
   max-width: calc(100% - 1.5rem);
   transition: all 0.2s;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .board .mdc-text-field {
