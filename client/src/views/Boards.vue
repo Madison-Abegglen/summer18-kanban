@@ -127,15 +127,18 @@ header {
   white-space: nowrap;
   flex-shrink: 0;
   max-width: 30%;
+  min-width: 30%;
   text-overflow: ellipsis;
   text-align: left;
   overflow: hidden;
+  padding: 0;
+  justify-content: unset;
 }
 
 .board-des {
   margin-right: auto;
   border-left: solid 0.1rem var(--mdc-theme-primary);
-  margin-left: 0.25rem;
+  margin-left: 0.5rem;
   padding-left: 0.5rem;
   white-space: nowrap;
   overflow: hidden;
