@@ -123,4 +123,13 @@ export default {
 .mdc-button__icon {
   margin: 0 !important;
 }
+
+@media (max-width: 800px) {
+  html {
+    font-size: 12px;
+  }
+  header {
+    padding: 1rem !important;
+  }
+}
 </style>

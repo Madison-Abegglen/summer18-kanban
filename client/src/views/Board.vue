@@ -203,4 +203,8 @@ header {
   flex: unset !important;
   margin-right: 1rem;
 }
+
+@media (max-width: 800px) {
+  
+}
 </style>
