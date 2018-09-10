@@ -89,7 +89,10 @@ export default new Vuex.Store({
     },
     logout ({ commit, dispatch }) {
       auth.delete('logout')
-        .then(() => commit('setUser', {}))
+        .then(() => {
+          commit('setUser', {})
+          router.push({ name: 'login' })
+        })
         .catch(error => dispatch('showSnack', error))
     },
 

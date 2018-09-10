@@ -1,8 +1,7 @@
 <template>
   <main class='boards'>
-    <header class='mdc-elevation mdc-elevation--z4'>
-      <mdc-headline align="center">WELCOME TO YOUR BOARDS</mdc-headline>
-    </header>
+    <mdc-top-app-bar icon='exit_to_app' dense title='WELCOME TO YOUR BOARDS' v-on:nav='$store.dispatch("logout")'>
+    </mdc-top-app-bar>
     <mdc-fab fixed icon='add' @click='open = true'></mdc-fab>
     <mdc-dialog v-model='open' title='New Board' accept=''>
       <form @submit.prevent='addBoard' class="form">
@@ -70,8 +69,9 @@ export default {
 
 <style lang='scss' scoped>
 header {
-  padding: 1.25rem 2rem;
+  padding: 0.5rem 1.5rem;
   margin-bottom: 1.5rem;
+  height: unset;
   * {
     margin: 0;
   }
