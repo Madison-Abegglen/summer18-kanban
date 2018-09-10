@@ -44,7 +44,9 @@ router.beforeEach((to, from, next) => {
     to.matched.some(route => route.meta.requiresAuth) &&
     !store.getters.loggedIn
   ) {
-    store.state.reroute = { name: to.name, params: to.params }
+    if (to.name !== 'login') {
+      store.state.reroute = { name: to.name, params: to.params }
+    }
     return next({ name: 'login' })
   }
   next()
