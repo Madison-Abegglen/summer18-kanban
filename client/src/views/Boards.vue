@@ -73,7 +73,7 @@ header {
   padding: 0.5rem 1.5rem;
   margin-bottom: 1.5rem;
   height: unset;
-  background-color: var(--mdc-theme-secondary);
+  background-color: var(--mdc-theme-tertiary);
   * {
     margin: 0;
   }
