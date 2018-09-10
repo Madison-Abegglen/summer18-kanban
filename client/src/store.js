@@ -104,16 +104,16 @@ export default new Vuex.Store({
         })
         .catch(error => dispatch('showSnack', error))
     },
-    addBoard ({ commit, dispatch }, boardData) {
+    addBoard ({ dispatch }, boardData) {
       api.post('boards', boardData)
-        .then(serverBoard => {
+        .then(() => {
           dispatch('getBoards')
         })
         .catch(error => dispatch('showSnack', error))
     },
-    deleteBoard ({ commit, dispatch }, boardId) {
+    deleteBoard ({ dispatch }, boardId) {
       api.delete('boards/' + boardId)
-        .then(res => {
+        .then(() => {
           dispatch('getBoards')
         })
         .catch(error => dispatch('showSnack', error))
@@ -152,14 +152,14 @@ export default new Vuex.Store({
     },
     createList ({ dispatch, state }, title) {
       api.post('lists/', { title, boardId: state.activeBoard._id })
-        .then(res => {
+        .then(() => {
           dispatch('setLists', state.activeBoard._id)
         })
         .catch(error => dispatch('showSnack', error))
     },
     deleteList ({ dispatch, state }, listId) {
       api.delete('lists/' + listId)
-        .then(res => {
+        .then(() => {
           dispatch('setLists', state.activeBoard._id)
         })
         .catch(error => dispatch('showSnack', error))
@@ -178,14 +178,14 @@ export default new Vuex.Store({
     },
     createTask ({ dispatch }, data) {
       api.post('tasks/', data)
-        .then(res => {
+        .then(() => {
           dispatch('setTasks', data.listId)
         })
         .catch(error => dispatch('showSnack', error))
     },
     moveTask ({ dispatch }, data) {
       api.put('tasks/' + data.taskId, { listId: data.newListId })
-        .then(res => {
+        .then(() => {
           dispatch('setTasks', data.newListId)
           dispatch('setTasks', data.oldListId)
         })
@@ -197,7 +197,7 @@ export default new Vuex.Store({
       api.post('tasks/comments/' + data.taskId, {
         content: data.content
       })
-        .then(res => {
+        .then(() => {
           dispatch('setTasks', data.listId)
         })
         .catch(error => dispatch('showSnack', error))
