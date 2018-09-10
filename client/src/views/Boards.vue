@@ -69,6 +69,7 @@ export default {
 
 <style lang='scss' scoped>
 header {
+  position: unset !important;
   padding: 0.5rem 1.5rem;
   margin-bottom: 1.5rem;
   height: unset;
@@ -94,8 +95,10 @@ header {
     transition: box-shadow 0.2s;
     will-change: box-shadow;
     background-color: white;
+    z-index: 22;
     &:not(:hover) {
       box-shadow: none;
+      z-index: unset;
     }
   }
 }
