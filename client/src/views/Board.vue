@@ -9,7 +9,9 @@
         </mdc-headline>
         <mdc-body class='m-0'>Created at: {{ activeBoard.created | moment('h:mm a — MM/DD/YY') }}</mdc-body>
       </div>
-      <i class="material-icons mdc-button__icon info-icon">info</i>
+      <i class="material-icons mdc-button__icon info-icon">info
+        <div class='board-description mdc-elevation mdc-elevation--z4'>{{ activeBoard.description }}</div>
+      </i>
     </mdc-top-app-bar>
     <transition-group name='lists' tag='section'>
       <mdc-card v-if="newListOpen" class="add-list-card list" key='form'>
@@ -97,8 +99,42 @@ header {
     align-self: flex-start;
     margin-left: 0.5rem !important;
     cursor: pointer;
+    position: relative;
+    &:hover {
+      .board-description {
+        opacity: 1;
+        pointer-events: unset;
+      }
+    }
+    .board-description {
+      transition: opacity 0.2s;
+      will-change: opacity;
+      opacity: 0;
+      pointer-events: none;
+      position: absolute;
+      top: calc(100% + 0.75rem);
+      left: 50%;
+      transform: translate(-50%);
+      padding: 1rem;
+      font-family: Roboto, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      background-color: var(--mdc-theme-background);
+      color: var(--mdc-theme-secondary);
+      width: 15rem;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(45deg);
+        width: 0.5rem;
+        height: 0.5rem;
+        background-color: var(--mdc-theme-background);
+      }
+    }
   }
 }
+
 .lists-leave-active {
   position: absolute;
 }
