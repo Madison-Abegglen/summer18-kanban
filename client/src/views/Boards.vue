@@ -23,7 +23,7 @@
             <i class='material-icons mdc-button__icon'>more_horiz</i>
           </mdc-button>
          
-          <mdc-menu v-model='board.open'>
+          <mdc-menu v-model='board.open' style='min-width: unset;'>
             <mdc-button @click='deleteBoard(board._id)'>Remove</mdc-button>
             <mdc-button :to='{name: "board", params: {boardId: board._id}}'>Open</mdc-button>
           </mdc-menu>
