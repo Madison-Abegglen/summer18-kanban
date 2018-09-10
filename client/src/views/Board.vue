@@ -107,6 +107,8 @@ header {
       }
     }
     .board-description {
+      white-space: initial !important;
+      font-size: 1rem !important;
       transition: opacity 0.2s;
       will-change: opacity;
       opacity: 0;
