@@ -119,7 +119,7 @@ header {
 .add-list-button {
   transition: transform 0.2s;
 }
-.rotate45 {
+.rotate45 * {
   transform: rotate(45deg);
 }
 </style>
