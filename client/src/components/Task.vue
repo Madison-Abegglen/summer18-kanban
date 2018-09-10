@@ -62,7 +62,12 @@ export default {
       });
       this.commentContent = "";
     },
-    deleteTask() {}
+    deleteTask() {
+      this.$store.dispatch("deleteTask", {
+        taskId: this.$props.taskData._id,
+        listId: this.$props.taskData.listId
+      });
+    }
   }
 };
 </script>
