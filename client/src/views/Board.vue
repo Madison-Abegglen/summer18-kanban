@@ -1,12 +1,15 @@
 <template>
   <div class="board" ref='container'>
-    <header class='mdc-elevation mdc-elevation--z4'>
-      <mdc-headline class='m-0 board-title'>Welcome to your board:
-        <strong>{{activeBoard.title}}</strong>
-      </mdc-headline>
-      <mdc-body class='m-0'>Created at: {{ activeBoard.created | moment('h:mm a — MM/DD/YY') }}</mdc-body>
-    </header>
-
+    <!-- <header class='mdc-elevation mdc-elevation--z4'>
+    </header> -->
+    <mdc-top-app-bar icon='arrow_back' dense v-on:nav='$router.push({ name: "boards" })'>
+      <div class='header-title'>
+        <mdc-headline class='m-0 board-title'>Welcome to your board:
+          <strong>{{activeBoard.title}}</strong>
+        </mdc-headline>
+        <mdc-body class='m-0'>Created at: {{ activeBoard.created | moment('h:mm a — MM/DD/YY') }}</mdc-body>
+      </div>
+    </mdc-top-app-bar>
     <transition-group name='lists' tag='section'>
       <mdc-card v-if="newListOpen" class="add-list-card list" key='form'>
         <form @submit.prevent="addNewList">
@@ -76,6 +79,20 @@ export default {
 };
 </script>
 <style lang='scss' scoped>
+header {
+  position: unset !important;
+  padding: 0.5rem 1.5rem;
+  margin-bottom: 1.5rem;
+  height: unset;
+  background-color: var(--mdc-theme-tertiary);
+  * {
+    margin: 0;
+  }
+  .header-title {
+    display: flex;
+    flex-direction: column;
+  }
+}
 .lists-leave-active {
   position: absolute;
 }
@@ -135,5 +152,11 @@ header {
 }
 .rotate45 * {
   transform: rotate(45deg);
+}
+</style>
+<style lang='scss'>
+.mdc-top-app-bar__section {
+  flex: unset !important;
+  margin-right: 1rem;
 }
 </style>
