@@ -9,6 +9,7 @@
         </mdc-headline>
         <mdc-body class='m-0'>Created at: {{ activeBoard.created | moment('h:mm a — MM/DD/YY') }}</mdc-body>
       </div>
+      <i class="material-icons mdc-button__icon info-icon">info</i>
     </mdc-top-app-bar>
     <transition-group name='lists' tag='section'>
       <mdc-card v-if="newListOpen" class="add-list-card list" key='form'>
@@ -91,6 +92,11 @@ header {
   .header-title {
     display: flex;
     flex-direction: column;
+  }
+  .info-icon {
+    align-self: flex-start;
+    margin-left: 0.5rem !important;
+    cursor: pointer;
   }
 }
 .lists-leave-active {
