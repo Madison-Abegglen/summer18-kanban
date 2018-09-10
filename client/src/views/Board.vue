@@ -1,5 +1,5 @@
 <template>
-  <div class="board">
+  <div class="board" ref='container'>
     <header class='mdc-elevation mdc-elevation--z4'>
       <mdc-headline class='m-0 board-title'>Welcome to your board:
         <strong>{{activeBoard.title}}</strong>
@@ -30,6 +30,8 @@
 
 <script>
 import List from '@/components/List';
+const autoScroll = require('dom-autoscroller')
+
 export default {
   name: 'board',
   computed: {
@@ -43,6 +45,18 @@ export default {
   async created() {
     // dispatch boardId to setBoard for activeBoard
     await this.$store.dispatch('setBoard', this.$props.boardId);
+  },
+  mounted() {
+    const dragging = () => !!this.$store.state.dragging
+    autoScroll(this.$refs.container, {
+      margin: 2000,
+      maxSpeed: 200,
+      pixels: 40,
+      scrollWhenOutside: true,
+      autoScroll() {
+        return this.down && dragging()
+      }
+    })
   },
   props: ['boardId'],
   components: { List },

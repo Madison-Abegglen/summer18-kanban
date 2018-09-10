@@ -25,7 +25,7 @@
 
       <mdc-dialog v-model='newTaskOpen' title='New Task' accept=''>
         <form @submit.prevent='addTask' class="form" key='new-task-form'>
-          <mdc-textfield required label='Task Content' v-model='taskContent' multiline rows="5" cols="70" class="task-content" />
+          <mdc-textfield required label='Task content' v-model='taskContent' multiline rows="5" cols="70" class="task-content" />
           <mdc-button type='submit' @click='newTaskOpen = false' outlined>Create Task</mdc-button>
         </form>
       </mdc-dialog>

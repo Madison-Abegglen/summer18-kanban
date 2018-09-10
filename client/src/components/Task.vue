@@ -1,9 +1,8 @@
 <template>
-    <mdc-list-item class="master-list-list">
-      <div class="task-content">
-        <drag :transfer-data='{ taskId: $props.taskData._id, oldListId: $props.taskData.listId }' class='title'>
-          {{$props.taskData.content}}
-        </drag>
+  <mdc-list-item class="master-list-list" :style='$store.state.dragging ? "cursor: grab" : ""'>
+    <drag @dragstart='$store.state.dragging += 1' @dragend='$store.state.dragging -= 1' :transfer-data='{ taskId: $props.taskData._id, oldListId: $props.taskData.listId }' style='width: 100%;'>
+      <div class='task-content'>
+        <span class='title' align='left'>{{$props.taskData.content}}</span>
         <mdc-body class="counter" title="comment count">{{ comments.length }}</mdc-body>
 
         <mdc-button dense title="view comments" @click="comments.length && (open = !open)">
@@ -18,19 +17,21 @@
           <i class='material-icons mdc-button__icon'>delete_outline</i>
         </mdc-button>
       </div>
+      <span slot='image' class='title html-image' align='left'>{{$props.taskData.content}}</span>
+    </drag>
 
-      <mdc-list v-if="open" class="comment-list">
-        <comment v-for="comment in comments" :key="comment._id" :commentData="comment" />
-      </mdc-list>
+    <mdc-list v-if="open" class="comment-list">
+      <comment v-for="comment in comments" :key="comment._id" :commentData="comment" />
+    </mdc-list>
 
-      <mdc-dialog v-model='newCommentOpen' title='New Comment' accept=''>
-        <form @submit.prevent='addComment' class="form">
-          <mdc-textfield required label='Comment content' v-model='commentContent' multiline rows="5" cols="70" class="comment-content" />
-          <mdc-button type='submit' @click='newCommentOpen = false' outlined>Create Comment</mdc-button>
-        </form>
-      </mdc-dialog>
+    <mdc-dialog v-model='newCommentOpen' title='New Comment' accept=''>
+      <form @submit.prevent='addComment' class="form">
+        <mdc-textfield required label='Comment content' v-model='commentContent' multiline rows="5" cols="70" class="comment-content" />
+        <mdc-button type='submit' @click='newCommentOpen = false' outlined>Create Comment</mdc-button>
+      </form>
+    </mdc-dialog>
 
-    </mdc-list-item>
+  </mdc-list-item>
 </template>
 
 <script>
@@ -102,5 +103,14 @@ export default {
   display: flex;
   flex-direction: column;
   height: unset !important;
+}
+.html-image {
+  opacity: 1;
+  background-color: white;
+  padding: 0.5rem 1rem;
+  border: solid 1px black;
+  width: 5rem;
+  overflow: hidden;
+  white-space: nowrap;
 }
 </style>

@@ -15,6 +15,19 @@
   --mdc-theme-tertiary: #5c636e !important;
   --mdc-theme-background: #f7f7f7 !important;
 }
+
+body::-webkit-scrollbar {
+  width: 6px;
+}
+body::-webkit-scrollbar-thumb {
+  background-color: #222;
+  outline: 1px solid #7f7f7f;
+}
+body::-webkit-scrollbar-track {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
 .mdc-text-field--focused:not(.mdc-text-field--disabled) {
   .mdc-floating-label {
     color: var(--mdc-theme-tertiary) !important;
