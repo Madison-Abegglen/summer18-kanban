@@ -15,7 +15,7 @@
 
     <mdc-list bordered class='list'>
       <mdc-list-item class='list-item mdc-elevation mdc-elevation--z2' v-for='board in boards' :key='board._id'>
-        <mdc-button class='board-title' :to='{name: "board", params: {boardId: board._id}}'>{{board.title}}</mdc-button>
+        <mdc-button class='board-title' :title='board.title' :to='{name: "board", params: {boardId: board._id}}'>{{board.title}}</mdc-button>
         <mdc-text class='board-des' :title='board.description' typo='body2' tag='span'>{{board.description}}</mdc-text>
 
         <mdc-menu-anchor>
