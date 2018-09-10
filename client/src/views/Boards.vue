@@ -126,6 +126,10 @@ header {
   }
   white-space: nowrap;
   flex-shrink: 0;
+  max-width: 30%;
+  text-overflow: ellipsis;
+  text-align: left;
+  overflow: hidden;
 }
 
 .board-des {
