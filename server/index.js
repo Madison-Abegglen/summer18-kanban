@@ -4,7 +4,7 @@ const app = require('http').createServer(server)
 const cors = require('cors')
 const port = process.env.PORT || 3000
 
-app.use(express.static(__dirname + '/../client/dist/'))
+server.use(express.static(__dirname + '/../client/dist/'))
 
 const whitelist = ['http://localhost:8080', 'https://bumble-kanban.herokuapp.com/']
 const corsOptions = {
