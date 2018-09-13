@@ -17,6 +17,7 @@
     "cors": "^2.8.1",
     "express": "^4.14.1",
     "express-session": "^1.15.0",
+    "http": "0.0.0",
     "mongoose": "^4.8.1"
   },
   "engines": {

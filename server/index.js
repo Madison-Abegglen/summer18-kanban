@@ -1,6 +1,6 @@
 const express = require('express')
 const server = express()
-const app = reuire('http').createServer(server)
+const app = require('http').createServer(server)
 const cors = require('cors')
 const port = process.event.PORT || 3000
 
