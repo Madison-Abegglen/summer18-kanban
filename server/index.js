@@ -2,7 +2,7 @@ const express = require('express')
 const server = express()
 const app = require('http').createServer(server)
 const cors = require('cors')
-const port = process.event.PORT || 3000
+const port = process.env.PORT || 3000
 
 app.use(express.static(__dirname + '/../client/dist/'))
 
