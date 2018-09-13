@@ -1,8 +1,12 @@
-const server = require('express')()
+const express = require('express')
+const server = express()
+const app = reuire('http').createServer(server)
 const cors = require('cors')
-const port = 3000
+const port = process.event.PORT || 3000
 
-const whitelist = ['http://localhost:8080']
+app.use(express.static(__dirname + '/../client/dist/'))
+
+const whitelist = ['http://localhost:8080', 'https://bumble-kanban.herokuapp.com/']
 const corsOptions = {
   origin: function (origin, callback) {
     const originIsWhitelisted = whitelist.indexOf(origin) !== -1

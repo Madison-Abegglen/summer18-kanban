@@ -4,11 +4,11 @@
   "description": "Kanban a tool for organizing projects",
   "main": "index.js",
   "scripts": {
-    "debug": "node index.js",
-    "start": "node index.js",
-    "dev": "node index.js"
+    "debug": "node server/index.js",
+    "start": "node server/index.js",
+    "dev": "node server/index.js"
   },
-  "author": "Mark Ohnsman <mark.ohnsman@gmail.com>",
+  "author": "Madison Abegglen, Christopher Brown",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.16.0",
@@ -18,5 +18,9 @@
     "express": "^4.14.1",
     "express-session": "^1.15.0",
     "mongoose": "^4.8.1"
+  },
+  "engines": {
+    "node": "^8.0.0",
+    "npm": "^6.0.0"
   }
 }
